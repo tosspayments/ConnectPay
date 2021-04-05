@@ -5,10 +5,12 @@ Pod::Spec.new do |spec|
 
   spec.name         = "ConnectPay"
   spec.version      = "0.0.1"
-  spec.summary      = "A short description of ConnectPay."
+  spec.summary      = "ConnectPay SDK from TossPayments"
 
   spec.description  = <<-DESC
-                   ConnectPay Description
+                   ConnectPay SDK from TossPayments
+
+                   You can install Pay module easily.
                    DESC
 
   spec.homepage     = "https://www.tosspayments.com"
@@ -18,7 +20,7 @@ Pod::Spec.new do |spec|
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
   #
-
+  spec.license          = { :type => 'Proprietary', :text => 'Copyright 2021 TossPayments Ltd. All rights reserved.' }
   # spec.license      = "MIT (example)"
   # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
@@ -37,15 +39,12 @@ Pod::Spec.new do |spec|
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
   #
-  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "#0.0.1" }
+  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "0.0.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
   #
-
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}"
-  spec.exclude_files = "Classes/Exclude"
 
   
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -68,7 +67,7 @@ Pod::Spec.new do |spec|
   #  the lib prefix of their name.
   #
 
-  # spec.framework  = "SomeFramework"
+  spec.ios.vendored_frameworks = 'Frameworks/ConnectPaySDK.framework'
   # spec.frameworks = "SomeFramework", "AnotherFramework"
 
   # spec.library   = "iconv"
