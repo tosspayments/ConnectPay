@@ -14,75 +14,15 @@ Pod::Spec.new do |spec|
                    DESC
 
   spec.homepage     = "https://www.tosspayments.com"
-  # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  spec.license      = { :type => 'Proprietary', :text => 'Copyright 2021 TossPayments Ltd. All rights reserved.' }
+  spec.author       = { "Jinkyu Kim" => "mqz@toss.im" }
+  spec.platform     = :ios
+  spec.ios.deployment_target = '11.0'
+  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :branch => "develop" }
 
-
-  # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #
-  spec.license          = { :type => 'Proprietary', :text => 'Copyright 2021 TossPayments Ltd. All rights reserved.' }
-  # spec.license      = "MIT (example)"
-  # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
-
-
-  # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #
-
-  spec.author             = { "Jinkyu Kim" => "mqz@toss.im" }
+  spec.ios.frameworks = 'UIKit'
   
-  # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #
-  spec.platform     = :ios, "11.0"
-
-  # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #
-  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "0.0.1" }
-
-
-  # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #
-
+  spec.ios.preserve_paths = 'Library/ConnectPaySDK.framework'
+  spec.ios.vendored_frameworks = 'Library/ConnectPaySDK.framework'
   
-  # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  A list of resources included with the Pod. These are copied into the
-  #  target bundle with a build phase script. Anything else will be cleaned.
-  #  You can preserve files from being cleaned, please don't preserve
-  #  non-essential files like tests, examples and documentation.
-  #
-
-  # spec.resource  = "icon.png"
-  # spec.resources = "Resources/*.png"
-
-  # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
-
-
-  # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Link your library with frameworks, or libraries. Libraries do not include
-  #  the lib prefix of their name.
-  #
-
-  spec.ios.vendored_frameworks = 'Frameworks/ConnectPaySDK.framework'
-  # spec.frameworks = "SomeFramework", "AnotherFramework"
-
-  # spec.library   = "iconv"
-  # spec.libraries = "iconv", "xml2"
-
-
-  # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  If your library depends on compiler flags you can set them in the xcconfig hash
-  #  where they will only apply to your library. If you depend on other Podspecs
-  #  you can include multiple dependencies to ensure it works.
-
-  # spec.requires_arc = true
-
-  # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # spec.dependency "JSONKit", "~> 1.4"
-
 end

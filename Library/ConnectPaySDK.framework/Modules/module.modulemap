@@ -1,0 +1,11 @@
+framework module ConnectPaySDK {
+  umbrella header "ConnectPaySDK.h"
+
+  export *
+  module * { export * }
+}
+
+module ConnectPaySDK.Swift {
+    header "ConnectPaySDK-Swift.h"
+    requires objc
+}
