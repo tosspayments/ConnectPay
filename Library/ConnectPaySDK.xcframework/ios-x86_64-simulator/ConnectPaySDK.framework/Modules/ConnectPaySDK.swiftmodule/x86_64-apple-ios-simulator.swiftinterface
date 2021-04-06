@@ -1,0 +1,15 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConnectPaySDK
+@_exported import ConnectPaySDK
+import FincubeOCR
+import Foundation
+import Swift
+import TossPaymentsCore
+import UIKit
+import WebKit
+final public class TossConnectPay {
+  public init(clientKey: Swift.String, customerKey: Swift.String, redirectURL: Swift.String)
+  final public func registerCard(on viewController: UIKit.UIViewController)
+  @objc deinit
+}
