@@ -1,0 +1,104 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name TossPaymentsCore
+import Foundation
+import QuartzCore
+import Swift
+import UIKit
+extension CGPoint {
+  public func distance(from point: CoreGraphics.CGPoint) -> CoreGraphics.CGFloat
+  public static func distance(from point1: CoreGraphics.CGPoint, to point2: CoreGraphics.CGPoint) -> CoreGraphics.CGFloat
+}
+public typealias Parameters = [Swift.String : Any]
+public protocol RequestBuilder {
+  associatedtype SuccessType : Swift.Decodable
+  typealias SuccessHandler = (Self.SuccessType?) -> Swift.Void
+  typealias ErrorHandler = (Swift.Error?) -> Swift.Void
+  var path: Swift.String { get }
+  var baseURL: Foundation.URL { get }
+  var parameters: TossPaymentsCore.Parameters? { get }
+  var method: TossPaymentsCore.HTTPRequestMethod { get }
+  var additionalHeaders: [Swift.String : Swift.String]? { get }
+  var contentType: TossPaymentsCore.ContentType { get }
+  var timeout: Foundation.TimeInterval { get }
+  func parseResponseData(data: Foundation.Data, response: Foundation.URLResponse?, contentType: TossPaymentsCore.ContentType) throws -> Self.SuccessType?
+  func request(clientKey: Swift.String, successHandler: Self.SuccessHandler?, errorHandler: Self.ErrorHandler?)
+}
+extension RequestBuilder {
+  public var parameters: TossPaymentsCore.Parameters? {
+    get
+  }
+  public var baseURL: Foundation.URL {
+    get
+  }
+  public var method: TossPaymentsCore.HTTPRequestMethod {
+    get
+  }
+  public var additionalHeaders: [Swift.String : Swift.String]? {
+    get
+  }
+  public var timeout: Foundation.TimeInterval {
+    get
+  }
+  public var contentType: TossPaymentsCore.ContentType {
+    get
+  }
+  public func request(clientKey: Swift.String, successHandler: Self.SuccessHandler?, errorHandler: Self.ErrorHandler?)
+  public func parseResponseData(data: Foundation.Data, response: Foundation.URLResponse?, contentType: TossPaymentsCore.ContentType) throws -> Self.SuccessType?
+}
+public enum HTTPRequestMethod : Swift.String {
+  case get
+  case head
+  case post
+  case put
+  case delete
+  case connect
+  case options
+  case trace
+  case patch
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+public enum ContentType : Swift.String {
+  case json
+  case xWWWFormURLEncoded
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc public class TextFieldLine : UIKit.UIView {
+  public init(frame: CoreGraphics.CGRect = .zero, text: Swift.String? = nil, placeholder: Swift.String? = nil, keyboardType: UIKit.UIKeyboardType = .default, maxLength: Swift.Int? = nil)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc override dynamic public var canBecomeFirstResponder: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic public var canResignFirstResponder: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic public var isFirstResponder: Swift.Bool {
+    @objc get
+  }
+  @discardableResult
+  @objc override dynamic public func becomeFirstResponder() -> Swift.Bool
+  @discardableResult
+  @objc override dynamic public func resignFirstResponder() -> Swift.Bool
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+}
+extension TextFieldLine : UIKit.UITextFieldDelegate {
+  @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
+}
+extension TossPaymentsCore.HTTPRequestMethod : Swift.Equatable {}
+extension TossPaymentsCore.HTTPRequestMethod : Swift.Hashable {}
+extension TossPaymentsCore.HTTPRequestMethod : Swift.RawRepresentable {}
+extension TossPaymentsCore.ContentType : Swift.Equatable {}
+extension TossPaymentsCore.ContentType : Swift.Hashable {}
+extension TossPaymentsCore.ContentType : Swift.RawRepresentable {}
