@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "ConnectPay"
-  spec.version      = "0.0.5"
+  spec.version      = "0.0.6"
   spec.summary      = "ConnectPay SDK from TossPayments"
 
   spec.description  = <<-DESC
@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "Jinkyu Kim" => "mqz@toss.im" }
   spec.platform     = :ios
   spec.ios.deployment_target = '11.0'
-  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "0.0.5" }
+  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "0.0.6" }
 
   spec.ios.frameworks = 'UIKit'
   
