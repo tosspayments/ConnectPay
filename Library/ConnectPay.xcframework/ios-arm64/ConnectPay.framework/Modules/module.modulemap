@@ -1,4 +1,0 @@
-framework module ConnectPay {
-  header "ConnectPay-Swift.h"
-  requires objc
-}
