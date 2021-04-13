@@ -1,0 +1,4 @@
+framework module ConnectPaySDK {
+  header "ConnectPaySDK-Swift.h"
+  requires objc
+}
