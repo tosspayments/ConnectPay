@@ -23,18 +23,18 @@ Pod::Spec.new do |spec|
   spec.ios.frameworks = 'UIKit'
   
   spec.ios.preserve_paths = [
-    'Library/FinCubeOcrSDK.framework',
+    'Library/FinCubeOcrSDK.xcframework',
     'Library/FincubeOCRWrapper.xcframework', 
     'Library/TossPaymentsCore.xcframework', 
     'Library/ConnectPay.xcframework'    
   ]
   spec.ios.vendored_frameworks = [
-    'Library/FinCubeOcrSDK.framework',
+    'Library/FinCubeOcrSDK.xcframework',
     'Library/FincubeOCRWrapper.xcframework', 
     'Library/TossPaymentsCore.xcframework', 
     'Library/ConnectPay.xcframework'
   ]
-  spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  # spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  # spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   
 end
