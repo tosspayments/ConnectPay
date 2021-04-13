@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "Jinkyu Kim" => "mqz@toss.im" }
   spec.platform     = :ios
   spec.ios.deployment_target = '11.0'
-  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :branch => "develop" }
+  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "0.0.5" }
 
   spec.ios.frameworks = 'UIKit'
   
