@@ -1,4 +1,0 @@
-framework module FincubeOCRWrapper {
-  header "FincubeOCRWrapper-Swift.h"
-  requires objc
-}

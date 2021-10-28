@@ -1,104 +1,1096 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
 // swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name TossPaymentsCore
+import AVFoundation
+import CallKit
+import CommonCrypto
+import CoreTelephony
+import CryptoKit
+import FinCubeOcrSDK
 import Foundation
+import LocalAuthentication
+import MobileCoreServices
 import QuartzCore
+import Security
 import Swift
+import SwiftUI
+import UIKit.UIFont
 import UIKit
-extension CGPoint {
-  public func distance(from point: CoreGraphics.CGPoint) -> CoreGraphics.CGFloat
-  public static func distance(from point1: CoreGraphics.CGPoint, to point2: CoreGraphics.CGPoint) -> CoreGraphics.CGFloat
+import WebKit
+public enum TossPaymentsCoreAsset {
+  public static let clearTextfield: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnArrowDownwards: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnArrowRightwardsLine: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnArrowRightwards: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnAttentionLine: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnIosClose: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnDeleteNumpad: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnShowPasswordOff: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnShowPasswordOn: TossPaymentsCore.TossPaymentsCoreImages
+  public static let listArrow: TossPaymentsCore.TossPaymentsCoreImages
+  public static let pinFaceid: TossPaymentsCore.TossPaymentsCoreImages
+  public static let pinTouchid: TossPaymentsCore.TossPaymentsCoreImages
+  public static let tossNavigationIconBack: TossPaymentsCore.TossPaymentsCoreImages
 }
-public typealias Parameters = [Swift.String : Any]
-public protocol RequestBuilder {
-  associatedtype SuccessType : Swift.Decodable
-  typealias SuccessHandler = (Self.SuccessType?) -> Swift.Void
-  typealias ErrorHandler = (Swift.Error?) -> Swift.Void
-  var path: Swift.String { get }
-  var baseURL: Foundation.URL { get }
-  var parameters: TossPaymentsCore.Parameters? { get }
-  var method: TossPaymentsCore.HTTPRequestMethod { get }
-  var additionalHeaders: [Swift.String : Swift.String]? { get }
-  var contentType: TossPaymentsCore.ContentType { get }
-  var timeout: Foundation.TimeInterval { get }
-  func parseResponseData(data: Foundation.Data, response: Foundation.URLResponse?, contentType: TossPaymentsCore.ContentType) throws -> Self.SuccessType?
-  func request(clientKey: Swift.String, successHandler: Self.SuccessHandler?, errorHandler: Self.ErrorHandler?)
-}
-extension RequestBuilder {
-  public var parameters: TossPaymentsCore.Parameters? {
+public struct TossPaymentsCoreImages {
+  public var name: Swift.String {
     get
   }
-  public var baseURL: Foundation.URL {
-    get
-  }
-  public var method: TossPaymentsCore.HTTPRequestMethod {
-    get
-  }
-  public var additionalHeaders: [Swift.String : Swift.String]? {
-    get
-  }
-  public var timeout: Foundation.TimeInterval {
-    get
-  }
-  public var contentType: TossPaymentsCore.ContentType {
-    get
-  }
-  public func request(clientKey: Swift.String, successHandler: Self.SuccessHandler?, errorHandler: Self.ErrorHandler?)
-  public func parseResponseData(data: Foundation.Data, response: Foundation.URLResponse?, contentType: TossPaymentsCore.ContentType) throws -> Self.SuccessType?
-}
-public enum HTTPRequestMethod : Swift.String {
-  case get
-  case head
-  case post
-  case put
-  case delete
-  case connect
-  case options
-  case trace
-  case patch
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
-  public init?(rawValue: Swift.String)
-}
-public enum ContentType : Swift.String {
-  case json
-  case xWWWFormURLEncoded
-  public typealias RawValue = Swift.String
-  public init?(rawValue: Swift.String)
-  public var rawValue: Swift.String {
+  public typealias Image = UIKit.UIImage
+  public var image: TossPaymentsCore.TossPaymentsCoreImages.Image {
     get
   }
 }
-@objc public class TextFieldLine : UIKit.UIView {
-  public init(frame: CoreGraphics.CGRect = .zero, text: Swift.String? = nil, placeholder: Swift.String? = nil, keyboardType: UIKit.UIKeyboardType = .default, maxLength: Swift.Int? = nil)
+extension UIImage {
+  @available(macOS, deprecated, message: "This initializer is unsafe on macOS, please use the TossPaymentsCoreImages.image property")
+  convenience public init?(asset: TossPaymentsCore.TossPaymentsCoreImages)
+}
+@_inheritsConvenienceInitializers @objc public class TossPaymentsCoreResources : ObjectiveC.NSObject {
+  @objc public class var bundle: Foundation.Bundle {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum TossPaymentsCoreFontFamily {
+  public enum TossProductSansOTF {
+    public static let bold: TossPaymentsCore.TossPaymentsCoreFontConvertible
+    public static let extraBold: TossPaymentsCore.TossPaymentsCoreFontConvertible
+    public static let heavy: TossPaymentsCore.TossPaymentsCoreFontConvertible
+    public static let light: TossPaymentsCore.TossPaymentsCoreFontConvertible
+    public static let medium: TossPaymentsCore.TossPaymentsCoreFontConvertible
+    public static let regular: TossPaymentsCore.TossPaymentsCoreFontConvertible
+    public static let semiBold: TossPaymentsCore.TossPaymentsCoreFontConvertible
+    public static let all: [TossPaymentsCore.TossPaymentsCoreFontConvertible]
+  }
+  public static let allCustomFonts: [TossPaymentsCore.TossPaymentsCoreFontConvertible]
+  public static func registerAllCustomFonts()
+}
+public struct TossPaymentsCoreFontConvertible {
+  public let name: Swift.String
+  public let family: Swift.String
+  public let path: Swift.String
+  public typealias Font = UIKit.UIFont
+  public func font(size: CoreGraphics.CGFloat) -> TossPaymentsCore.TossPaymentsCoreFontConvertible.Font
+  public func register()
+}
+extension UIFont {
+  convenience public init?(font: TossPaymentsCore.TossPaymentsCoreFontConvertible, size: CoreGraphics.CGFloat)
+}
+@_hasMissingDesignatedInitializers final public class ConnectPayConfiguration {
+  public static let shared: TossPaymentsCore.ConnectPayConfiguration
+  final public var sidePadding: CoreGraphics.CGFloat
+  final public var baseURL: Foundation.URL
+  final public var clientKey: Swift.String
+  final public var customerKey: Swift.String
+  final public var redirectURL: Swift.String
+  @objc deinit
+}
+final public class ConnectPayProvider {
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ConnectPayRouter : TossPaymentsCore.ProcessRouter {
+  public init(provider: TossPaymentsCore.ConnectPayProvider, rootViewController: UIKit.UIViewController)
+  override final public func continueProcess()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class Toast : TossPaymentsCore.CommonToast {
+  override public func setUp()
+  @objc override dynamic public func layoutSubviews()
+  override public func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
+  override public init(frame: CoreGraphics.CGRect = super, completion: TossPaymentsCore.CommonToast.Completion? = super)
+  @objc deinit
+}
+final public class AddCardPayableMethodProvider {
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class AddCardPayableMethodRouter : TossPaymentsCore.ProcessRouter {
+  final public var resultHandler: ((Swift.Result<Swift.String?, Swift.Error>) -> Swift.Void)?
+  public init(provider: TossPaymentsCore.AddCardPayableMethodProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+public struct AlertAction {
+  public let button: TossPaymentsCore.AlertActionButton
+  public let handler: TossPaymentsCore.AlertCompletion?
+}
+public struct AlertActionButton {
+  public let alertStyle: UIKit.UIAlertAction.Style
+  public let button: TossPaymentsCore.Button?
+  public var title: Swift.String {
+    get
+  }
+  public static func `default`(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
+  public static func cancel(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
+  public static func destructive(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
+}
+extension AlertActionButton {
+  public static func `default`(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
+  public static func cancel(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
+  public static func destructive(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
+}
+@objc public class CustomerTokenProvider : ObjectiveC.NSObject {
+  public init(getAccessTokenHandler: TossPaymentsCore.GetAccessTokenHandler?)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class CustomerTokenRouter : TossPaymentsCore.ProcessRouter {
+  final public var resultHandler: ((Swift.Result<Swift.String, Swift.Error>) -> Swift.Void)?
+  public init(provider: TossPaymentsCore.CustomerTokenProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+public typealias GetAccessTokenHandler = (Swift.String, ((Swift.Result<Swift.Bool, Swift.Error>) -> Swift.Void)?) -> Swift.Void
+final public class IdentityProvider {
+  public enum Purpose {
+    case register
+    case reset
+    public static func == (a: TossPaymentsCore.IdentityProvider.Purpose, b: TossPaymentsCore.IdentityProvider.Purpose) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public init(purpose: TossPaymentsCore.IdentityProvider.Purpose = .register, force: Swift.Bool = false)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class IdentityRouter : TossPaymentsCore.ProcessRouter {
+  final public var completion: (() -> Swift.Void)?
+  public init(provider: TossPaymentsCore.IdentityProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers final public class VerifySMSView : UIKit.UIView {
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+final public class OccupanciesAccountProvider {
+  public init(methodID: Swift.String)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class OccupanciesAccountRouter : TossPaymentsCore.ProcessRouter {
+  final public var resultHandler: ((Swift.Result<Swift.Bool, Swift.Error>) -> Swift.Void)?
+  public init(provider: TossPaymentsCore.OccupanciesAccountProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+final public class OneTouchProvider {
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class OneTouchRouter : TossPaymentsCore.ProcessRouter {
+  public init(provider: TossPaymentsCore.OneTouchProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+final public class PayAuthorizeProvider {
+  public init(methodID: Swift.String, paymentAuthInfo: TossPaymentsCore.PaymentAuthInfo?)
+  @objc deinit
+}
+final public class RequestPaymentProvider {
+  public init(data: TossPaymentsCore.PaymentDataInterface)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class RequestPaymentRouter : TossPaymentsCore.ProcessRouter {
+  final public var resultHandler: ((Swift.Result<Swift.String, Swift.Error>) -> Swift.Void)?
+  final public var getAccessTokenHandler: TossPaymentsCore.GetAccessTokenHandler?
+  public init(provider: TossPaymentsCore.RequestPaymentProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+extension Toast {
+  @objc(showWithContent:) public static func show(with content: Swift.String?)
+  @objc(showWithContent:timeInterval:) public static func show(with content: Swift.String?, timeInterval: Foundation.TimeInterval)
+}
+final public class SettingsProvider {
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class SettingsRouter : TossPaymentsCore.ProcessRouter {
+  final public var getAccessTokenHandler: TossPaymentsCore.GetAccessTokenHandler?
+  final public var resultHandler: ((Swift.Result<Swift.Void, Swift.Error>) -> Swift.Void)?
+  public init(provider: TossPaymentsCore.SettingsProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+final public class TermsAgreementProvider {
+  public init(force: Swift.Bool = true)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class TermsAgreementRouter : TossPaymentsCore.ProcessRouter {
+  final public var resultHandler: ((Swift.Result<Swift.Bool, Swift.Error>) -> Swift.Void)?
+  public init(provider: TossPaymentsCore.TermsAgreementProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+final public class AddPayMethodProvider {
+  public init(method: Swift.String? = nil)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class AddPayMethodRouter : TossPaymentsCore.ProcessRouter {
+  final public var resultHandler: ((Swift.Result<Swift.String?, Swift.Error>) -> Swift.Void)?
+  final public var getAccessTokenHandler: TossPaymentsCore.GetAccessTokenHandler?
+  public init(provider: TossPaymentsCore.AddPayMethodProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+final public class GetPaymentMethodsProvider {
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class GetPaymentMethodsRouter : TossPaymentsCore.ProcessRouter {
+  final public var resultHandler: ((Swift.Result<(Foundation.Data, Foundation.URLResponse?), Swift.Error>) -> Swift.Void)?
+  final public var getAccessTokenHandler: TossPaymentsCore.GetAccessTokenHandler?
+  public init(provider: TossPaymentsCore.GetPaymentMethodsProvider)
+  override final public func continueProcess()
+  @objc deinit
+}
+public enum PaymentAuthType : Swift.String, Swift.Codable {
+  case oneFactorAuth
+  case twoFactorAuth
+  case onetouch
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct PaymentAuthInfo : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum PayableMethodType : Swift.String, Swift.Decodable {
+  case card
+  case account
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum PayMethodListStep {
+  case single(TossPaymentsCore.PayableMethodType)
+  case multiple([TossPaymentsCore.PayableMethodType])
+  case none
+}
+extension CommonToast {
+  public enum DismissTimeIntervalType {
+    case forever
+    case seconds(Swift.Double)
+  }
+  public enum DismissalType {
+    case buttonTap
+    case gesture
+    case timeInterval
+    public static func == (a: TossPaymentsCore.CommonToast.DismissalType, b: TossPaymentsCore.CommonToast.DismissalType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum Direction {
+    case left, right, down
+    public static func == (a: TossPaymentsCore.CommonToast.Direction, b: TossPaymentsCore.CommonToast.Direction) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public typealias Completion = (TossPaymentsCore.CommonToast.DismissalType) -> Swift.Void
+}
+@propertyWrapper public struct Atomic<Value> {
+  public init(wrappedValue value: Value)
+  public var wrappedValue: Value {
+    get
+    set
+  }
+}
+@objc extension NSData {
+  @objc dynamic public func toHexString() -> Swift.String
+  @objc dynamic public func toHexString(isLowerCased: Swift.Bool = true) -> Swift.String
+  @objc dynamic public func toString(encoding rawValue: Swift.UInt) -> Swift.String?
+  @objc dynamic public func toStringUsingUTF8Encoding() -> Swift.String?
+}
+@usableFromInline
+internal struct DiffResult<Index> {
+}
+public protocol EncryptedValue {
+  associatedtype SafeOutput
+  associatedtype UnsafeOutput
+  var decrypted: Self.SafeOutput { get }
+  var unsafeDecrypted: Self.UnsafeOutput { get }
+  func withSafeBuffer<T>(_ block: (Swift.UnsafeMutablePointer<Swift.Int8>, Swift.Int) throws -> T) rethrows -> T
+}
+extension EncryptedValue {
+  public func withSafeData<T>(_ block: (Foundation.Data) throws -> T) rethrows -> T
+}
+public enum ValidateWeakPINResult : Swift.Equatable {
+  case substringOfPhoneNumber
+  case substringOfBirthday
+  case sameNumberLongerThanThree
+  case consecutiveNumberLongerThanThree
+  case easyPIN
+  case validPIN
+  public var reasonMessage: Swift.String? {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: TossPaymentsCore.ValidateWeakPINResult, b: TossPaymentsCore.ValidateWeakPINResult) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension String {
+  public func validateWeakPIN(phoneNumber: Swift.String? = nil, eightDigitBirthday: Swift.String? = nil, weakPINs: [Swift.String] = []) -> TossPaymentsCore.ValidateWeakPINResult
+}
+public protocol AlertPresentable : UIKit.UIViewController {
+}
+public typealias AlertCompletion = () -> Swift.Void
+public typealias AlertHandler = (Swift.Bool) -> Swift.Void
+public class Alert {
+  weak open var alertPresentable: TossPaymentsCore.AlertPresentable?
+  public init(title: Swift.String? = nil, message: Swift.String? = nil)
+  @objc deinit
+}
+extension Alert {
+  @discardableResult
+  public func addAction(_ button: TossPaymentsCore.AlertActionButton, handler: TossPaymentsCore.AlertCompletion? = nil) -> Self
+  public func setAutomaticDismissDisabled(_ isDisabled: Swift.Bool) -> Self
+  public func setAlignActionsVertically(_ alignActionsVertically: Swift.Bool) -> Self
+  public func setDismissOnTappingDimmingView(_ dismissOnTappingDimmingView: Swift.Bool) -> Self
+  public func setDismissOnTappingDimmingViewHandler(_ dismissOnTappingDimmingViewHandler: (() -> Swift.Void)?) -> Self
+}
+extension Alert {
+  public func show(on viewController: UIKit.UIViewController? = nil)
+  public func dismiss(animated: Swift.Bool = true)
+}
+extension Alert {
+  public static func show(on viewController: UIKit.UIViewController? = nil, title: Swift.String? = nil, message: Swift.String? = nil, handler: TossPaymentsCore.AlertCompletion? = nil)
+}
+extension UIAlertController : TossPaymentsCore.AlertPresentable {
+}
+@_hasMissingDesignatedInitializers public class TelNumberFormatter {
+  public enum MaskingArea : Swift.Equatable {
+    case areaCode
+    case firstNumber
+    case secondNumber
+    public func hash(into hasher: inout Swift.Hasher)
+    public static func == (a: TossPaymentsCore.TelNumberFormatter.MaskingArea, b: TossPaymentsCore.TelNumberFormatter.MaskingArea) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public static let shared: TossPaymentsCore.TelNumberFormatter
+  public func validate(_ telNumber: Swift.String) -> TossPaymentsCore.TelNumberInfo?
+  public func formatting(_ telNumber: Swift.String, masking: [TossPaymentsCore.TelNumberFormatter.MaskingArea] = []) -> Swift.String
+  @objc deinit
+}
+public struct TelNumberInfo {
+  public let parser: TossPaymentsCore.TelNumberParser
+  public let areaCode: Swift.String?
+  public let firstNumber: Swift.String
+  public let secondNumber: Swift.String
+}
+public enum TelNumberParser : Swift.CaseIterable {
+  case areaCode
+  case nationalRepresentative
+  case phone
+  public static func == (a: TossPaymentsCore.TelNumberParser, b: TossPaymentsCore.TelNumberParser) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public typealias AllCases = [TossPaymentsCore.TelNumberParser]
+  public static var allCases: [TossPaymentsCore.TelNumberParser] {
+    get
+  }
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension TelNumberParser {
+  public var validatingPattern: Swift.String {
+    get
+  }
+  public var formattingPattern: Swift.String {
+    get
+  }
+}
+public struct InternalAccountMethod : Swift.Codable, Swift.Hashable, TossPaymentsCore.AccountMethodInterface {
+  public let id: Swift.String
+  public var type: TossPaymentsCore.PaymentMethodType {
+    get
+  }
+  public let bank: Swift.String
+  public let accountNumber: Swift.String
+  public let registeredAt: Swift.String
+  public let status: Swift.String
+  public let icons: TossPaymentsCore.InternalAccountMethod.Icons
+  public struct Icons : Swift.Codable, Swift.Hashable {
+    public let fill: TossPaymentsCore.InternalAccountMethod.IconInfo
+    public let square: TossPaymentsCore.InternalAccountMethod.IconInfo
+    public let normal: TossPaymentsCore.InternalAccountMethod.IconInfo
+    public func hash(into hasher: inout Swift.Hasher)
+    public static func == (a: TossPaymentsCore.InternalAccountMethod.Icons, b: TossPaymentsCore.InternalAccountMethod.Icons) -> Swift.Bool
+    public func encode(to encoder: Swift.Encoder) throws
+    public var hashValue: Swift.Int {
+      get
+    }
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public struct IconInfo : Swift.Codable, Swift.Hashable {
+    public let name: Swift.String
+    public let url: Foundation.URL
+    public func hash(into hasher: inout Swift.Hasher)
+    public static func == (a: TossPaymentsCore.InternalAccountMethod.IconInfo, b: TossPaymentsCore.InternalAccountMethod.IconInfo) -> Swift.Bool
+    public func encode(to encoder: Swift.Encoder) throws
+    public var hashValue: Swift.Int {
+      get
+    }
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public var iconURL: Foundation.URL? {
+    get
+  }
+  public var iconFillURL: Foundation.URL? {
+    get
+  }
+  public var fullDisplayInfo: Swift.String {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: TossPaymentsCore.InternalAccountMethod, b: TossPaymentsCore.InternalAccountMethod) -> Swift.Bool
+  public func encode(to encoder: Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InternalCardMethod : Swift.Codable, Swift.Hashable, TossPaymentsCore.CardMethodInterface {
+  public let id: Swift.String
+  public var type: TossPaymentsCore.PaymentMethodType {
+    get
+  }
+  public let cardCompany: Swift.String
+  public let cardNumber: Swift.String
+  public let cardName: Swift.String
+  public let ownerType: Swift.String
+  public let cardType: Swift.String
+  public let registeredAt: Swift.String
+  public let status: Swift.String
+  public let iconURL: Foundation.URL?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case id
+    case cardCompany
+    case cardNumber
+    case cardName
+    case ownerType
+    case cardType
+    case registeredAt
+    case status
+    case iconURL
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: TossPaymentsCore.InternalCardMethod, b: TossPaymentsCore.InternalCardMethod) -> Swift.Bool
+  public func encode(to encoder: Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InternalPaymentData : TossPaymentsCore.PaymentDataInterface {
+  public let amount: Swift.Int64
+  public let orderID: Swift.String
+  public let orderName: Swift.String
+  public let successURL: Swift.String
+  public let failURL: Swift.String
+  public let methodID: Swift.String?
+  public let customerEmail: Swift.String?
+  public let shippingAddress: Swift.String?
+  public let taxFreeAmount: Swift.Int64?
+  public let cardInstallmentPlan: Swift.Int?
+  public let useCardPoint: Swift.Int64?
+  public let discountCode: Swift.String?
+  public init(amount: Swift.Int64, orderID: Swift.String, orderName: Swift.String, successURL: Swift.String, failURL: Swift.String, methodID: Swift.String? = nil, customerEmail: Swift.String? = nil, shippingAddress: Swift.String? = nil, taxFreeAmount: Swift.Int64? = nil, cardInstallmentPlan: Swift.Int? = nil, useCardPoint: Swift.Int64? = nil, discountCode: Swift.String? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum InternalPaymentMethodType : Swift.String, Swift.Codable {
+  case account
+  case card
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct InternalPaymentMethods : Swift.Codable {
+  public let result: TossPaymentsCore.InternalPaymentMethods.Result
+  public struct Result : Swift.Codable {
+    public let selectedMethodID: Swift.String?
+    public let cards: [TossPaymentsCore.InternalCardMethod]
+    public let accounts: [TossPaymentsCore.InternalAccountMethod]
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public func getAllMethodList() -> [TossPaymentsCore.PayableMethodInterface]
+  public func getMethod(methodID: Swift.String?) -> TossPaymentsCore.PayableMethodInterface?
+  public func getAccountMethod(methodID: Swift.String?) -> TossPaymentsCore.InternalAccountMethod?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public protocol TossAdapterLayoutProtocol {
+  var scrollDirection: UIKit.UICollectionView.ScrollDirection { get }
+  var sectionInset: UIKit.UIEdgeInsets { get }
+}
+extension UICollectionViewFlowLayout : TossPaymentsCore.TossAdapterLayoutProtocol {
+}
+extension Hasher {
+  public mutating func randomize()
+}
+public protocol Diffable {
+  var diffHash: Swift.Int { get }
+  func hash(into hasher: inout Swift.Hasher)
+  func equals(_ diffable: TossPaymentsCore.Diffable) -> Swift.Bool
+}
+extension Diffable {
+  public var diffHash: Swift.Int {
+    get
+  }
+  public func equals(_ diffable: TossPaymentsCore.Diffable) -> Swift.Bool
+}
+extension Diffable where Self : Swift.Hashable {
+  public var diffHash: Swift.Int {
+    get
+  }
+}
+extension Optional : TossPaymentsCore.Diffable where Wrapped : TossPaymentsCore.Diffable {
+  public func hash(into hasher: inout Swift.Hasher)
+}
+@objc @_hasMissingDesignatedInitializers final public class DigitContainerView : UIKit.UIStackView {
+  final public var numberOfDigits: Swift.Int {
+    get
+    set
+  }
+  final public var digits: [Swift.Int]? {
+    get
+    set
+  }
+  required public init(numberOfDigits: Swift.Int)
+  @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+public protocol CharacterPreviewAvailable {
+  var value: Swift.String? { get }
+}
+@objc @_hasMissingDesignatedInitializers public class KeyView : UIKit.UIView, TossPaymentsCore.CharacterPreviewAvailable {
+  public var indexValue: Swift.Int? {
+    get
+    set
+  }
+  public var value: Swift.String? {
+    get
+    set
+  }
+  public var image: UIKit.UIImage? {
+    get
+    set
+  }
+  @objc override dynamic public func layoutSubviews()
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+extension KeyView {
+  @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+}
+public protocol SwitchConvertible : AnyObject {
+  var isOn: Swift.Bool { get set }
+  func setOn(_ on: Swift.Bool, animated: Swift.Bool)
+}
+extension SwitchConvertible {
+  public func toggle(animated: Swift.Bool)
+}
+public typealias SwitchControl = UIKit.UIControl & TossPaymentsCore.SwitchConvertible
+public protocol TextDescriptor : TossPaymentsCore.Diffable {
+  func attributedText() -> Foundation.NSAttributedString?
+  func attributedText(using traitCollection: UIKit.UITraitCollection?) -> Foundation.NSAttributedString?
+  func descriptorHeight(using traitCollection: UIKit.UITraitCollection?) -> CoreGraphics.CGFloat
+  var accessibilityLabel: Swift.String? { get }
+}
+extension TextDescriptor {
+  public func attributedText() -> Foundation.NSAttributedString?
+  public func descriptorHeight(using traitCollection: UIKit.UITraitCollection?) -> CoreGraphics.CGFloat
+  public var accessibilityLabel: Swift.String? {
+    get
+  }
+}
+extension Optional : TossPaymentsCore.TextDescriptor where Wrapped : TossPaymentsCore.TextDescriptor {
+  public func attributedText(using traitCollection: UIKit.UITraitCollection?) -> Foundation.NSAttributedString?
+}
+public protocol GroupedTextDescriptor : TossPaymentsCore.TextDescriptor {
+  var textDescriptors: [TossPaymentsCore.TextDescriptor] { get }
+}
+extension GroupedTextDescriptor {
+  public func hash(into hasher: inout Swift.Hasher)
+  public func descriptorHeight(using traitCollection: UIKit.UITraitCollection?) -> CoreGraphics.CGFloat
+  public func attributedText(using traitCollection: UIKit.UITraitCollection?) -> Foundation.NSAttributedString?
+}
+public struct DefaultGroupedTextDescriptor : TossPaymentsCore.GroupedTextDescriptor {
+  public var textDescriptors: [TossPaymentsCore.TextDescriptor]
+  public init(_ textDescriptors: [TossPaymentsCore.TextDescriptor])
+}
+@objc open class CommonToast : UIKit.UIView {
+  public struct CommonConstants {
+  }
+  public init(frame: CoreGraphics.CGRect = .zero, completion: TossPaymentsCore.CommonToast.Completion? = nil)
+  @available(*, unavailable)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  open func setUp()
+  open func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
+  open func dismissByPanGesture(direction: TossPaymentsCore.CommonToast.Direction)
+  open func dismissByTapGesture(direction: TossPaymentsCore.CommonToast.Direction)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+extension CommonToast {
+  public func show(animated: Swift.Bool = true)
+  public func show(in view: UIKit.UIView, animated: Swift.Bool = true)
+  public func dismiss(animate: Swift.Bool = true, dismissalType: TossPaymentsCore.CommonToast.DismissalType, direction: TossPaymentsCore.CommonToast.Direction = .down)
+}
+extension UIImage {
+  public class func image(fromColor color: UIKit.UIColor?, alpha: CoreGraphics.CGFloat = 1, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1)) -> UIKit.UIImage?
+  public class func image(fromColors colors: [UIKit.UIColor], alpha: CoreGraphics.CGFloat = 1, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1)) -> UIKit.UIImage?
+}
+extension UIImage {
+  public func tint(with color: UIKit.UIColor) -> UIKit.UIImage
+  public func tint(with colors: [UIKit.UIColor]) -> UIKit.UIImage
+}
+@_hasMissingDesignatedInitializers final public class FeedbackGenerator {
+  final public let feedbackType: TossPaymentsCore.FeedbackGeneratorProvider.FeedbackType
+  final public func generate()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class FeedbackGeneratorProvider {
+  public enum FeedbackType {
+    case impactLight
+    case impactMedium
+    case impactHeavy
+    case selection
+    case notificationError
+    case notificationSuccess
+    case notificationWarning
+    public static func == (a: TossPaymentsCore.FeedbackGeneratorProvider.FeedbackType, b: TossPaymentsCore.FeedbackGeneratorProvider.FeedbackType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  final public class func generator(for feedbackType: TossPaymentsCore.FeedbackGeneratorProvider.FeedbackType) -> TossPaymentsCore.FeedbackGenerator
+  @objc deinit
+}
+public protocol ImageContent {
+  var image: UIKit.UIImage? { get }
+}
+extension UIImage : TossPaymentsCore.ImageContent {
+  public var image: UIKit.UIImage? {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class InsetContainerView<ContentView> : UIKit.UIView where ContentView : UIKit.UIView {
+  final public let contentView: ContentView
+  public init(contentView: ContentView, layoutMargins: UIKit.UIEdgeInsets = .zero)
+  convenience public init(contentView: ContentView, topMargin: CoreGraphics.CGFloat = 0, leftMargin: CoreGraphics.CGFloat = 0, bottomMargin: CoreGraphics.CGFloat = 0, rightMargin: CoreGraphics.CGFloat = 0)
+  @objc override dynamic public func layoutMarginsDidChange()
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class ToastWindow : UIKit.UIWindow {
+  public static let windowLevel: UIKit.UIWindow.Level
+  public static let `default`: TossPaymentsCore.ToastWindow
+  @objc override final public func hitTest(_ point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> UIKit.UIView?
+  @objc deinit
+  @available(iOS 13.0, *)
+  @objc override dynamic public init(windowScene: UIKit.UIWindowScene)
+}
+@_hasMissingDesignatedInitializers public class NavigationAppearanceInfo {
+  public static let shared: TossPaymentsCore.NavigationAppearanceInfo
+  public var navigationBarAppearance: UIKit.UINavigationBar? {
+    get
+    set
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class ProcessRouter {
+  public func start(from viewController: UIKit.UIViewController, in newNavigationController: UIKit.UINavigationController? = nil)
+  public func pushViewController(_ viewController: UIKit.UIViewController, clear: Swift.Bool = false, clearShouldIncludePreExistViewControllers: Swift.Bool = false, animated: Swift.Bool = true)
+  public func finishProcess(animated: Swift.Bool = true, completion: (() -> Swift.Void)? = nil)
+  public func continueProcess()
+  public func showLoadingIndicator()
+  public func hideLoadingIndicator()
+  @objc deinit
+}
+public protocol ProcessRouterDelegate : AnyObject {
+  func shouldDismissProcessRouterWhenFinished(_ processRouter: TossPaymentsCore.ProcessRouter) -> Swift.Bool
+}
+extension ProcessRouterDelegate {
+  public func shouldDismissProcessRouterWhenFinished(_ processRouter: TossPaymentsCore.ProcessRouter) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers open class AlertController : TossPaymentsCore.TossViewController<UIKit.UIView>, UIKit.UIViewControllerTransitioningDelegate, UIKit.UIAdaptivePresentationControllerDelegate {
+  public var dismissOnTappingDimmingView: Swift.Bool
+  public var dismissOnTappingDimmingViewHandler: (() -> Swift.Void)?
+  public init()
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  open var presentedSize: CoreGraphics.CGSize {
+    get
+  }
+  @objc deinit
+}
+extension AlertController {
+  @objc dynamic public func presentationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController?, source: UIKit.UIViewController) -> UIKit.UIPresentationController?
+  @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+  @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+}
+@objc @_inheritsConvenienceInitializers open class BaseView : UIKit.UICollectionViewCell {
+  final public let container: UIKit.UIView
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc override dynamic open func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  public func setNeedsUpdateUI()
+  public func setup()
+  @objc deinit
+}
+extension BaseView {
+  public static var minimumHeight: CoreGraphics.CGFloat {
+    get
+  }
+  public func setViewModel(_ viewModel: Any)
+}
+extension Button {
+  public enum Style : Swift.String {
+    case fill
+    case weak
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+}
+extension Button {
+  public enum Theme : Swift.String {
+    case primary
+    case dark
+    case danger
+    case light
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+}
+@objc @_hasMissingDesignatedInitializers @IBDesignable public class Button : UIKit.UIButton {
   @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
     @objc get
   }
-  @objc override dynamic public var canBecomeFirstResponder: Swift.Bool {
+  @objc override dynamic public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @objc override dynamic public var isEnabled: Swift.Bool {
     @objc get
+    @objc set
   }
-  @objc override dynamic public var canResignFirstResponder: Swift.Bool {
+  @objc override dynamic public func layoutSubviews()
+  @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  @objc override dynamic public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
+  @objc override dynamic public func setTitle(_ title: Swift.String?, for state: UIKit.UIControl.State)
+  @objc override dynamic public var frame: CoreGraphics.CGRect {
     @objc get
+    @objc set
   }
-  @objc override dynamic public var isFirstResponder: Swift.Bool {
+  @objc override dynamic public var bounds: CoreGraphics.CGRect {
     @objc get
+    @objc set
   }
-  @discardableResult
-  @objc override dynamic public func becomeFirstResponder() -> Swift.Bool
-  @discardableResult
-  @objc override dynamic public func resignFirstResponder() -> Swift.Bool
-  @objc deinit
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
 }
-extension TextFieldLine : UIKit.UITextFieldDelegate {
-  @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
+extension Checkbox {
+  public struct Style {
+  }
 }
-extension TossPaymentsCore.HTTPRequestMethod : Swift.Equatable {}
-extension TossPaymentsCore.HTTPRequestMethod : Swift.Hashable {}
-extension TossPaymentsCore.HTTPRequestMethod : Swift.RawRepresentable {}
-extension TossPaymentsCore.ContentType : Swift.Equatable {}
-extension TossPaymentsCore.ContentType : Swift.Hashable {}
-extension TossPaymentsCore.ContentType : Swift.RawRepresentable {}
+extension Checkbox.Style : Swift.Hashable {
+  public static func == (lhs: TossPaymentsCore.Checkbox.Style, rhs: TossPaymentsCore.Checkbox.Style) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension Checkbox.Style {
+  public static var circleBig: TossPaymentsCore.Checkbox.Style {
+    get
+  }
+  public static var circleSmall: TossPaymentsCore.Checkbox.Style {
+    get
+  }
+  public static var checkbox: TossPaymentsCore.Checkbox.Style {
+    get
+  }
+  public static var star: TossPaymentsCore.Checkbox.Style {
+    get
+  }
+}
+extension Checkbox.Style {
+  public var primary: TossPaymentsCore.Checkbox.Style {
+    get
+  }
+  public var secondary: TossPaymentsCore.Checkbox.Style {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class Checkbox : UIKit.UIControl {
+  public var style: TossPaymentsCore.Checkbox.Style {
+    get
+    set
+  }
+  public var isOn: Swift.Bool
+  @available(*, unavailable)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  public init(frame: CoreGraphics.CGRect = .zero, style: TossPaymentsCore.Checkbox.Style)
+  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc override dynamic public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @objc override dynamic public var accessibilityLabel: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public func layoutSubviews()
+  @objc override dynamic public func point(inside point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> Swift.Bool
+  @available(*, unavailable)
+  @objc override dynamic public var isSelected: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override dynamic public var isHighlighted: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override dynamic public var contentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override dynamic public var contentVerticalAlignment: UIKit.UIControl.ContentVerticalAlignment {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override dynamic public var effectiveContentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
+    @objc get
+  }
+  @objc deinit
+}
+extension Checkbox : TossPaymentsCore.SwitchConvertible {
+  public func setOn(_ on: Swift.Bool, animated: Swift.Bool)
+}
+@objc @_inheritsConvenienceInitializers final public class MaterialActivityIndicator : UIKit.UIView {
+  @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc override final public var isHidden: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  final public var radius: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  final public var strokeWidth: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  final public var cycleColors: [UIKit.UIColor] {
+    get
+    set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override final public func willMove(toWindow newWindow: UIKit.UIWindow?)
+  @objc override final public func layoutSubviews()
+  @objc override final public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  final public func startAnimating()
+  final public func stopAnimating(immediately: Swift.Bool = false)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers final public class MenuSelector : UIKit.UIButton {
+  public static let defaultTitle: Swift.String
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc override final public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @available(*, unavailable)
+  @objc override final public var contentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override final public var contentVerticalAlignment: UIKit.UIControl.ContentVerticalAlignment {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override final public var contentEdgeInsets: UIKit.UIEdgeInsets {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override final public var imageEdgeInsets: UIKit.UIEdgeInsets {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override final public var titleEdgeInsets: UIKit.UIEdgeInsets {
+    @objc get
+    @objc set
+  }
+  @available(*, unavailable)
+  @objc override final public func setTitleColor(_ color: UIKit.UIColor?, for state: UIKit.UIControl.State)
+  @available(*, unavailable)
+  @objc override final public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers open class ContentViewController<View> : UIKit.UIViewController where View : UIKit.UIView {
+  @objc override dynamic open func loadView()
+  @objc override dynamic open func viewDidLoad()
+  @objc override dynamic open func viewWillDisappear(_ animated: Swift.Bool)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class TossViewController<View> : TossPaymentsCore.ContentViewController<View> where View : UIKit.UIView {
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic open func viewDidLoad()
+  @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc deinit
+}
+public struct FlowSize {
+  public var scrollDirection: UIKit.UICollectionView.ScrollDirection
+  public var alignmentLength: CoreGraphics.CGFloat
+  public var distributionLength: CoreGraphics.CGFloat
+  public init(scrollDirection: UIKit.UICollectionView.ScrollDirection, alignmentLength: CoreGraphics.CGFloat, distributionLength: CoreGraphics.CGFloat)
+}
+extension FlowSize {
+  public func cgSize() -> CoreGraphics.CGSize
+}
+extension CGSize {
+  public func flowSize(by scrollDirection: UIKit.UICollectionView.ScrollDirection) -> TossPaymentsCore.FlowSize
+}
+public protocol SizeDiffable {
+  var sizeDiffHash: Swift.Int { get }
+  func hashSizeDiff(into hasher: inout Swift.Hasher)
+}
+extension SizeDiffable {
+  public var sizeDiffHash: Swift.Int {
+    get
+  }
+}
+public protocol AccountMethodInterface : TossPaymentsCore.PayableMethodInterface {
+  var bank: Swift.String { get }
+  var accountNumber: Swift.String { get }
+}
+public protocol CardMethodInterface : TossPaymentsCore.PayableMethodInterface {
+  var cardCompany: Swift.String { get }
+  var cardNumber: Swift.String { get }
+  var cardName: Swift.String { get }
+  var ownerType: Swift.String { get }
+  var cardType: Swift.String { get }
+}
+public protocol PayableMethodInterface : Swift.Decodable, Swift.Encodable {
+  var id: Swift.String { get }
+  var registeredAt: Swift.String { get }
+  var status: Swift.String { get }
+  var type: TossPaymentsCore.PaymentMethodType { get }
+}
+public protocol PaymentDataInterface : Swift.Decodable, Swift.Encodable {
+  var amount: Swift.Int64 { get }
+  var orderID: Swift.String { get }
+  var orderName: Swift.String { get }
+  var successURL: Swift.String { get }
+  var failURL: Swift.String { get }
+  var methodID: Swift.String? { get }
+  var customerEmail: Swift.String? { get }
+  var shippingAddress: Swift.String? { get }
+  var taxFreeAmount: Swift.Int64? { get }
+  var cardInstallmentPlan: Swift.Int? { get }
+  var useCardPoint: Swift.Int64? { get }
+  var discountCode: Swift.String? { get }
+}
+public enum PaymentMethodType : Swift.String, Swift.Codable {
+  case account
+  case card
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension UIKit.UIImage : TossPaymentsCore.Diffable {}
+extension TossPaymentsCore.IdentityProvider.Purpose : Swift.Equatable {}
+extension TossPaymentsCore.IdentityProvider.Purpose : Swift.Hashable {}
+extension TossPaymentsCore.PaymentAuthType : Swift.Equatable {}
+extension TossPaymentsCore.PaymentAuthType : Swift.Hashable {}
+extension TossPaymentsCore.PaymentAuthType : Swift.RawRepresentable {}
+extension TossPaymentsCore.PayableMethodType : Swift.Equatable {}
+extension TossPaymentsCore.PayableMethodType : Swift.Hashable {}
+extension TossPaymentsCore.PayableMethodType : Swift.RawRepresentable {}
+extension TossPaymentsCore.CommonToast.DismissalType : Swift.Equatable {}
+extension TossPaymentsCore.CommonToast.DismissalType : Swift.Hashable {}
+extension TossPaymentsCore.CommonToast.Direction : Swift.Equatable {}
+extension TossPaymentsCore.CommonToast.Direction : Swift.Hashable {}
+extension Swift.String : TossPaymentsCore.Diffable {}
+extension TossPaymentsCore.ValidateWeakPINResult : Swift.Hashable {}
+extension TossPaymentsCore.TelNumberFormatter.MaskingArea : Swift.Hashable {}
+extension TossPaymentsCore.TelNumberParser : Swift.Equatable {}
+extension TossPaymentsCore.TelNumberParser : Swift.Hashable {}
+extension TossPaymentsCore.InternalCardMethod.CodingKeys : Swift.Equatable {}
+extension TossPaymentsCore.InternalCardMethod.CodingKeys : Swift.Hashable {}
+extension TossPaymentsCore.InternalCardMethod.CodingKeys : Swift.RawRepresentable {}
+extension TossPaymentsCore.InternalPaymentMethodType : Swift.Equatable {}
+extension TossPaymentsCore.InternalPaymentMethodType : Swift.Hashable {}
+extension TossPaymentsCore.InternalPaymentMethodType : Swift.RawRepresentable {}
+extension TossPaymentsCore.FeedbackGeneratorProvider.FeedbackType : Swift.Equatable {}
+extension TossPaymentsCore.FeedbackGeneratorProvider.FeedbackType : Swift.Hashable {}
+extension Foundation.URL : TossPaymentsCore.Diffable {}
+extension TossPaymentsCore.Button.Style : Swift.Equatable {}
+extension TossPaymentsCore.Button.Style : Swift.Hashable {}
+extension TossPaymentsCore.Button.Style : Swift.RawRepresentable {}
+extension TossPaymentsCore.Button.Theme : Swift.Equatable {}
+extension TossPaymentsCore.Button.Theme : Swift.Hashable {}
+extension TossPaymentsCore.Button.Theme : Swift.RawRepresentable {}
+extension TossPaymentsCore.PaymentMethodType : Swift.Equatable {}
+extension TossPaymentsCore.PaymentMethodType : Swift.Hashable {}
+extension TossPaymentsCore.PaymentMethodType : Swift.RawRepresentable {}

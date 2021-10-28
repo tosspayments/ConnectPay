@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "ConnectPay"
-  spec.version      = "0.0.6"
+  spec.version      = "0.0.7"
   spec.summary      = "ConnectPay SDK from TossPayments"
 
   spec.description  = <<-DESC
@@ -18,19 +18,17 @@ Pod::Spec.new do |spec|
   spec.author       = { "Jinkyu Kim" => "mqz@toss.im" }
   spec.platform     = :ios
   spec.ios.deployment_target = '11.0'
-  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "0.0.6" }
+  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git", :tag => "0.0.7" }
 
   spec.ios.frameworks = 'UIKit'
   
   spec.ios.preserve_paths = [
     'Library/FinCubeOcrSDK.xcframework',
-    'Library/FincubeOCRWrapper.xcframework', 
     'Library/TossPaymentsCore.xcframework', 
     'Library/ConnectPaySDK.xcframework'    
   ]
   spec.ios.vendored_frameworks = [
     'Library/FinCubeOcrSDK.xcframework',
-    'Library/FincubeOCRWrapper.xcframework', 
     'Library/TossPaymentsCore.xcframework', 
     'Library/ConnectPaySDK.xcframework'
   ]
