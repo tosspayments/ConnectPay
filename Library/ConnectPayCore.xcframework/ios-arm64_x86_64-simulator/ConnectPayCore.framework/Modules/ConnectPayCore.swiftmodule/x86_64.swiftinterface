@@ -1,0 +1,101 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConnectPayCore
+import Foundation
+import Swift
+import TossPaymentsCore
+import UIKit
+final public class ConnectPay {
+  public static var sidePadding: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  public static var baseURL: Foundation.URL {
+    get
+    set
+  }
+  final public var clientKey: Swift.String {
+    get
+    set
+  }
+  final public var customerKey: Swift.String {
+    get
+    set
+  }
+  final public var redirectURL: Swift.String {
+    get
+    set
+  }
+  weak final public var delegate: ConnectPayCore.ConnectPayDelegate?
+  public init(clientKey: Swift.String, customerKey: Swift.String, redirectURL: Swift.String)
+  final public func addPaymentMethod(_ method: Swift.String? = nil, on viewController: UIKit.UIViewController, methodsHandler: @escaping (Swift.Result<Swift.String?, Swift.Error>) -> Swift.Void)
+  final public func getPaymentMethods(on viewController: UIKit.UIViewController, methodsHandler: @escaping (Swift.Result<ConnectPayCore.PaymentMethods, Swift.Error>) -> Swift.Void)
+  final public func requestPayment(data: TossPaymentsCore.PaymentDataInterface, on viewController: UIKit.UIViewController, resultHandler: @escaping (Swift.Result<Swift.String, Swift.Error>) -> Swift.Void)
+  final public func openSettings(on viewController: UIKit.UIViewController)
+  final public func setupPassword(on viewController: UIKit.UIViewController, resultHandler: @escaping (Swift.Result<Swift.Void, Swift.Error>) -> Swift.Void)
+  final public func setupOneTouchPay(on viewController: UIKit.UIViewController)
+  final public func requestAgreement(terms: Swift.String = "빌링", on viewController: UIKit.UIViewController, resultHandler: @escaping (Swift.Result<Swift.Void, Swift.Error>) -> Swift.Void)
+  @objc deinit
+}
+public struct AccountMethod : Swift.Codable, TossPaymentsCore.PayableMethodInterface {
+  public let id: Swift.String
+  public var type: TossPaymentsCore.PaymentMethodType {
+    get
+  }
+  public let bank: Swift.String
+  public let accountNumber: Swift.String
+  public let registeredAt: Swift.String
+  public let status: Swift.String
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct CardMethod : Swift.Codable, TossPaymentsCore.PayableMethodInterface {
+  public let id: Swift.String
+  public var type: TossPaymentsCore.PaymentMethodType {
+    get
+  }
+  public let cardCompany: Swift.String
+  public let cardNumber: Swift.String
+  public let cardName: Swift.String
+  public let ownerType: Swift.String
+  public let cardType: Swift.String
+  public let registeredAt: Swift.String
+  public let status: Swift.String
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct PaymentData : TossPaymentsCore.PaymentDataInterface, Swift.Codable {
+  public let amount: Swift.Int64
+  public let orderID: Swift.String
+  public let orderName: Swift.String
+  public let successURL: Swift.String
+  public let failURL: Swift.String
+  public let methodID: Swift.String?
+  public let customerEmail: Swift.String?
+  public let shippingAddress: Swift.String?
+  public let taxFreeAmount: Swift.Int64?
+  public let cardInstallmentPlan: Swift.Int?
+  public let useCardPoint: Swift.Int64?
+  public let discountCode: Swift.String?
+  public init(amount: Swift.Int64, orderID: Swift.String, orderName: Swift.String, successURL: Swift.String, failURL: Swift.String, methodID: Swift.String? = nil, customerEmail: Swift.String? = nil, shippingAddress: Swift.String? = nil, taxFreeAmount: Swift.Int64? = nil, cardInstallmentPlan: Swift.Int? = nil, useCardPoint: Swift.Int64? = nil, discountCode: Swift.String? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct PaymentMethods : Swift.Codable {
+  public let result: ConnectPayCore.PaymentMethods.Result
+  public struct Result : Swift.Codable {
+    public var cards: [ConnectPayCore.CardMethod]
+    public var accounts: [ConnectPayCore.AccountMethod]
+    public let selectedMethodID: Swift.String?
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public func getAllMethodList() -> [TossPaymentsCore.PayableMethodInterface]
+  public func getMethod(methodID: Swift.String?) -> TossPaymentsCore.PayableMethodInterface?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public protocol ConnectPayDelegate : AnyObject {
+  func getAccessToken(code: Swift.String?, resultHandler: ((Swift.Result<Swift.Bool, Swift.Error>) -> Swift.Void)?)
+  func didChangedPaymentMethods(_ paymentMethods: ConnectPayCore.PaymentMethods?)
+}

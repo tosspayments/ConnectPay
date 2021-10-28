@@ -13,13 +13,13 @@ let package = Package(
             targets: [
                 "TossPaymentsCore",
                 "FinCubeOcrSDK",
-                "ConnectPay"
+                "ConnectPayCore"
             ])
     ],
     targets: [
         .binaryTarget(name: "TossPaymentsCore", path: "Library/TossPaymentsCore.xcframework"),
         .binaryTarget(name: "FinCubeOcrSDK", path: "Library/FinCubeOcrSDK.xcframework"),
-        .binaryTarget(name: "ConnectPay", path: "Library/ConnectPay.xcframework")
+        .binaryTarget(name: "ConnectPayCore", path: "Library/ConnectPayCore.xcframework")
     ],
     swiftLanguageVersions: [
         .v5

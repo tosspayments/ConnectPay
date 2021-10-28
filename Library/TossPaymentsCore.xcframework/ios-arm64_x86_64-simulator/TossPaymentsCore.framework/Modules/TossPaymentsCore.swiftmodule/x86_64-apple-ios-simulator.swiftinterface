@@ -24,6 +24,7 @@ public enum TossPaymentsCoreAsset {
   public static let icnArrowRightwards: TossPaymentsCore.TossPaymentsCoreImages
   public static let icnAttentionLine: TossPaymentsCore.TossPaymentsCoreImages
   public static let icnIosClose: TossPaymentsCore.TossPaymentsCoreImages
+  public static let icnSuccessColor: TossPaymentsCore.TossPaymentsCoreImages
   public static let icnDeleteNumpad: TossPaymentsCore.TossPaymentsCoreImages
   public static let icnShowPasswordOff: TossPaymentsCore.TossPaymentsCoreImages
   public static let icnShowPasswordOn: TossPaymentsCore.TossPaymentsCoreImages
@@ -95,13 +96,6 @@ final public class ConnectPayProvider {
   override final public func continueProcess()
   @objc deinit
 }
-@objc @_hasMissingDesignatedInitializers public class Toast : TossPaymentsCore.CommonToast {
-  override public func setUp()
-  @objc override dynamic public func layoutSubviews()
-  override public func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
-  override public init(frame: CoreGraphics.CGRect = super, completion: TossPaymentsCore.CommonToast.Completion? = super)
-  @objc deinit
-}
 final public class AddCardPayableMethodProvider {
   public init()
   @objc deinit
@@ -111,25 +105,6 @@ final public class AddCardPayableMethodProvider {
   public init(provider: TossPaymentsCore.AddCardPayableMethodProvider)
   override final public func continueProcess()
   @objc deinit
-}
-public struct AlertAction {
-  public let button: TossPaymentsCore.AlertActionButton
-  public let handler: TossPaymentsCore.AlertCompletion?
-}
-public struct AlertActionButton {
-  public let alertStyle: UIKit.UIAlertAction.Style
-  public let button: TossPaymentsCore.Button?
-  public var title: Swift.String {
-    get
-  }
-  public static func `default`(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
-  public static func cancel(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
-  public static func destructive(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
-}
-extension AlertActionButton {
-  public static func `default`(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
-  public static func cancel(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
-  public static func destructive(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
 }
 @objc public class CustomerTokenProvider : ObjectiveC.NSObject {
   public init(getAccessTokenHandler: TossPaymentsCore.GetAccessTokenHandler?)
@@ -200,10 +175,6 @@ final public class RequestPaymentProvider {
   public init(provider: TossPaymentsCore.RequestPaymentProvider)
   override final public func continueProcess()
   @objc deinit
-}
-extension Toast {
-  @objc(showWithContent:) public static func show(with content: Swift.String?)
-  @objc(showWithContent:timeInterval:) public static func show(with content: Swift.String?, timeInterval: Foundation.TimeInterval)
 }
 final public class SettingsProvider {
   public init()
@@ -277,31 +248,6 @@ public enum PayMethodListStep {
   case multiple([TossPaymentsCore.PayableMethodType])
   case none
 }
-extension CommonToast {
-  public enum DismissTimeIntervalType {
-    case forever
-    case seconds(Swift.Double)
-  }
-  public enum DismissalType {
-    case buttonTap
-    case gesture
-    case timeInterval
-    public static func == (a: TossPaymentsCore.CommonToast.DismissalType, b: TossPaymentsCore.CommonToast.DismissalType) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
-      get
-    }
-  }
-  public enum Direction {
-    case left, right, down
-    public static func == (a: TossPaymentsCore.CommonToast.Direction, b: TossPaymentsCore.CommonToast.Direction) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
-      get
-    }
-  }
-  public typealias Completion = (TossPaymentsCore.CommonToast.DismissalType) -> Swift.Void
-}
 @propertyWrapper public struct Atomic<Value> {
   public init(wrappedValue value: Value)
   public var wrappedValue: Value {
@@ -346,32 +292,6 @@ public enum ValidateWeakPINResult : Swift.Equatable {
 }
 extension String {
   public func validateWeakPIN(phoneNumber: Swift.String? = nil, eightDigitBirthday: Swift.String? = nil, weakPINs: [Swift.String] = []) -> TossPaymentsCore.ValidateWeakPINResult
-}
-public protocol AlertPresentable : UIKit.UIViewController {
-}
-public typealias AlertCompletion = () -> Swift.Void
-public typealias AlertHandler = (Swift.Bool) -> Swift.Void
-public class Alert {
-  weak open var alertPresentable: TossPaymentsCore.AlertPresentable?
-  public init(title: Swift.String? = nil, message: Swift.String? = nil)
-  @objc deinit
-}
-extension Alert {
-  @discardableResult
-  public func addAction(_ button: TossPaymentsCore.AlertActionButton, handler: TossPaymentsCore.AlertCompletion? = nil) -> Self
-  public func setAutomaticDismissDisabled(_ isDisabled: Swift.Bool) -> Self
-  public func setAlignActionsVertically(_ alignActionsVertically: Swift.Bool) -> Self
-  public func setDismissOnTappingDimmingView(_ dismissOnTappingDimmingView: Swift.Bool) -> Self
-  public func setDismissOnTappingDimmingViewHandler(_ dismissOnTappingDimmingViewHandler: (() -> Swift.Void)?) -> Self
-}
-extension Alert {
-  public func show(on viewController: UIKit.UIViewController? = nil)
-  public func dismiss(animated: Swift.Bool = true)
-}
-extension Alert {
-  public static func show(on viewController: UIKit.UIViewController? = nil, title: Swift.String? = nil, message: Swift.String? = nil, handler: TossPaymentsCore.AlertCompletion? = nil)
-}
-extension UIAlertController : TossPaymentsCore.AlertPresentable {
 }
 @_hasMissingDesignatedInitializers public class TelNumberFormatter {
   public enum MaskingArea : Swift.Equatable {
@@ -656,24 +576,6 @@ public struct DefaultGroupedTextDescriptor : TossPaymentsCore.GroupedTextDescrip
   public var textDescriptors: [TossPaymentsCore.TextDescriptor]
   public init(_ textDescriptors: [TossPaymentsCore.TextDescriptor])
 }
-@objc open class CommonToast : UIKit.UIView {
-  public struct CommonConstants {
-  }
-  public init(frame: CoreGraphics.CGRect = .zero, completion: TossPaymentsCore.CommonToast.Completion? = nil)
-  @available(*, unavailable)
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
-  open func setUp()
-  open func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
-  open func dismissByPanGesture(direction: TossPaymentsCore.CommonToast.Direction)
-  open func dismissByTapGesture(direction: TossPaymentsCore.CommonToast.Direction)
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc deinit
-}
-extension CommonToast {
-  public func show(animated: Swift.Bool = true)
-  public func show(in view: UIKit.UIView, animated: Swift.Bool = true)
-  public func dismiss(animate: Swift.Bool = true, dismissalType: TossPaymentsCore.CommonToast.DismissalType, direction: TossPaymentsCore.CommonToast.Direction = .down)
-}
 extension UIImage {
   public class func image(fromColor color: UIKit.UIColor?, alpha: CoreGraphics.CGFloat = 1, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1)) -> UIKit.UIImage?
   public class func image(fromColors colors: [UIKit.UIColor], alpha: CoreGraphics.CGFloat = 1, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1)) -> UIKit.UIImage?
@@ -721,14 +623,6 @@ extension UIImage : TossPaymentsCore.ImageContent {
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
 }
-@objc @_hasMissingDesignatedInitializers final public class ToastWindow : UIKit.UIWindow {
-  public static let windowLevel: UIKit.UIWindow.Level
-  public static let `default`: TossPaymentsCore.ToastWindow
-  @objc override final public func hitTest(_ point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> UIKit.UIView?
-  @objc deinit
-  @available(iOS 13.0, *)
-  @objc override dynamic public init(windowScene: UIKit.UIWindowScene)
-}
 @_hasMissingDesignatedInitializers public class NavigationAppearanceInfo {
   public static let shared: TossPaymentsCore.NavigationAppearanceInfo
   public var navigationBarAppearance: UIKit.UINavigationBar? {
@@ -751,6 +645,51 @@ public protocol ProcessRouterDelegate : AnyObject {
 }
 extension ProcessRouterDelegate {
   public func shouldDismissProcessRouterWhenFinished(_ processRouter: TossPaymentsCore.ProcessRouter) -> Swift.Bool
+}
+public protocol AlertPresentable : UIKit.UIViewController {
+}
+public typealias AlertCompletion = () -> Swift.Void
+public typealias AlertHandler = (Swift.Bool) -> Swift.Void
+public class Alert {
+  weak open var alertPresentable: TossPaymentsCore.AlertPresentable?
+  public init(title: Swift.String? = nil, message: Swift.String? = nil)
+  @objc deinit
+}
+extension Alert {
+  @discardableResult
+  public func addAction(_ button: TossPaymentsCore.AlertActionButton, handler: TossPaymentsCore.AlertCompletion? = nil) -> Self
+  public func setAutomaticDismissDisabled(_ isDisabled: Swift.Bool) -> Self
+  public func setAlignActionsVertically(_ alignActionsVertically: Swift.Bool) -> Self
+  public func setDismissOnTappingDimmingView(_ dismissOnTappingDimmingView: Swift.Bool) -> Self
+  public func setDismissOnTappingDimmingViewHandler(_ dismissOnTappingDimmingViewHandler: (() -> Swift.Void)?) -> Self
+}
+extension Alert {
+  public func show(on viewController: UIKit.UIViewController? = nil)
+  public func dismiss(animated: Swift.Bool = true)
+}
+extension Alert {
+  public static func show(on viewController: UIKit.UIViewController? = nil, title: Swift.String? = nil, message: Swift.String? = nil, handler: TossPaymentsCore.AlertCompletion? = nil)
+}
+extension UIAlertController : TossPaymentsCore.AlertPresentable {
+}
+public struct AlertAction {
+  public let button: TossPaymentsCore.AlertActionButton
+  public let handler: TossPaymentsCore.AlertCompletion?
+}
+public struct AlertActionButton {
+  public let alertStyle: UIKit.UIAlertAction.Style
+  public let button: TossPaymentsCore.Button?
+  public var title: Swift.String {
+    get
+  }
+  public static func `default`(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
+  public static func cancel(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
+  public static func destructive(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
+}
+extension AlertActionButton {
+  public static func `default`(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
+  public static func cancel(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
+  public static func destructive(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
 }
 @_hasMissingDesignatedInitializers open class AlertController : TossPaymentsCore.TossViewController<UIKit.UIView>, UIKit.UIViewControllerTransitioningDelegate, UIKit.UIAdaptivePresentationControllerDelegate {
   public var dismissOnTappingDimmingView: Swift.Bool
@@ -982,6 +921,68 @@ extension Checkbox : TossPaymentsCore.SwitchConvertible {
   @objc override final public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
   @objc deinit
 }
+extension CommonToast {
+  public enum DismissTimeIntervalType {
+    case forever
+    case seconds(Swift.Double)
+  }
+  public enum DismissalType {
+    case buttonTap
+    case gesture
+    case timeInterval
+    public static func == (a: TossPaymentsCore.CommonToast.DismissalType, b: TossPaymentsCore.CommonToast.DismissalType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum Direction {
+    case left, right, down
+    public static func == (a: TossPaymentsCore.CommonToast.Direction, b: TossPaymentsCore.CommonToast.Direction) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public typealias Completion = (TossPaymentsCore.CommonToast.DismissalType) -> Swift.Void
+}
+@objc open class CommonToast : UIKit.UIView {
+  public struct CommonConstants {
+  }
+  public init(frame: CoreGraphics.CGRect = .zero, completion: TossPaymentsCore.CommonToast.Completion? = nil)
+  @available(*, unavailable)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  open func setUp()
+  open func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
+  open func dismissByPanGesture(direction: TossPaymentsCore.CommonToast.Direction)
+  open func dismissByTapGesture(direction: TossPaymentsCore.CommonToast.Direction)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+extension CommonToast {
+  public func show(animated: Swift.Bool = true)
+  public func show(in view: UIKit.UIView, animated: Swift.Bool = true)
+  public func dismiss(animate: Swift.Bool = true, dismissalType: TossPaymentsCore.CommonToast.DismissalType, direction: TossPaymentsCore.CommonToast.Direction = .down)
+}
+extension Toast {
+  @objc(showWithContent:) public static func show(with content: Swift.String?)
+  @objc(showWithContent:timeInterval:) public static func show(with content: Swift.String?, timeInterval: Foundation.TimeInterval)
+}
+@objc @_hasMissingDesignatedInitializers public class Toast : TossPaymentsCore.CommonToast {
+  override public func setUp()
+  @objc override dynamic public func layoutSubviews()
+  override public func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
+  override public init(frame: CoreGraphics.CGRect = super, completion: TossPaymentsCore.CommonToast.Completion? = super)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers final public class ToastWindow : UIKit.UIWindow {
+  public static let windowLevel: UIKit.UIWindow.Level
+  public static let `default`: TossPaymentsCore.ToastWindow
+  @objc override final public func hitTest(_ point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> UIKit.UIView?
+  @objc deinit
+  @available(iOS 13.0, *)
+  @objc override dynamic public init(windowScene: UIKit.UIWindowScene)
+}
 @_inheritsConvenienceInitializers open class ContentViewController<View> : UIKit.UIViewController where View : UIKit.UIView {
   @objc override dynamic open func loadView()
   @objc override dynamic open func viewDidLoad()
@@ -1067,10 +1068,6 @@ extension TossPaymentsCore.PaymentAuthType : Swift.RawRepresentable {}
 extension TossPaymentsCore.PayableMethodType : Swift.Equatable {}
 extension TossPaymentsCore.PayableMethodType : Swift.Hashable {}
 extension TossPaymentsCore.PayableMethodType : Swift.RawRepresentable {}
-extension TossPaymentsCore.CommonToast.DismissalType : Swift.Equatable {}
-extension TossPaymentsCore.CommonToast.DismissalType : Swift.Hashable {}
-extension TossPaymentsCore.CommonToast.Direction : Swift.Equatable {}
-extension TossPaymentsCore.CommonToast.Direction : Swift.Hashable {}
 extension Swift.String : TossPaymentsCore.Diffable {}
 extension TossPaymentsCore.ValidateWeakPINResult : Swift.Hashable {}
 extension TossPaymentsCore.TelNumberFormatter.MaskingArea : Swift.Hashable {}
@@ -1091,6 +1088,10 @@ extension TossPaymentsCore.Button.Style : Swift.RawRepresentable {}
 extension TossPaymentsCore.Button.Theme : Swift.Equatable {}
 extension TossPaymentsCore.Button.Theme : Swift.Hashable {}
 extension TossPaymentsCore.Button.Theme : Swift.RawRepresentable {}
+extension TossPaymentsCore.CommonToast.DismissalType : Swift.Equatable {}
+extension TossPaymentsCore.CommonToast.DismissalType : Swift.Hashable {}
+extension TossPaymentsCore.CommonToast.Direction : Swift.Equatable {}
+extension TossPaymentsCore.CommonToast.Direction : Swift.Hashable {}
 extension TossPaymentsCore.PaymentMethodType : Swift.Equatable {}
 extension TossPaymentsCore.PaymentMethodType : Swift.Hashable {}
 extension TossPaymentsCore.PaymentMethodType : Swift.RawRepresentable {}
