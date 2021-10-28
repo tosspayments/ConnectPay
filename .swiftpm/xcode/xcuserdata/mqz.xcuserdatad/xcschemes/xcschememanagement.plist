@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>ConnectPayPackage.xcscheme_^#shared#^_</key>
+		<key>ConnectPay.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>6A7A9374262590A200D2B148</key>
+		<key>ConnectPay</key>
 		<dict>
 			<key>primary</key>
 			<true/>
