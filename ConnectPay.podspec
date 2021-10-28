@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "ConnectPay"
-  spec.version      = "0.0.8"
+  spec.version      = "0.1.0"
   spec.summary      = "ConnectPay SDK from TossPayments"
 
   spec.description  = <<-DESC
@@ -18,19 +18,15 @@ Pod::Spec.new do |spec|
   spec.author       = { "Jinkyu Kim" => "mqz@toss.im" }
   spec.platform     = :ios
   spec.ios.deployment_target = '11.0'
-  spec.source       = { :git => "https://github.com/tosspayments/ios-connectpay.git" }
+  spec.source       = { :git => "https://github.com/tosspayments/ConnectPay.git", :tag => spec.version.to_s }
 
   spec.ios.frameworks = 'UIKit'
   
   spec.ios.preserve_paths = [
-    'Library/FinCubeOcrSDK.xcframework',
-    'Library/TossPaymentsCore.xcframework', 
-    'Library/ConnectPaySDK.xcframework'    
+    'Library/*.xcframework'
   ]
   spec.ios.vendored_frameworks = [
-    'Library/FinCubeOcrSDK.xcframework',
-    'Library/TossPaymentsCore.xcframework', 
-    'Library/ConnectPaySDK.xcframework'
+    'Library/*.xcframework'
   ]
   spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
