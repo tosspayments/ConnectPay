@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "ConnectPay"
-  spec.version      = "0.1.1"
+  spec.version      = `cat version`
   spec.summary      = "ConnectPay SDK from TossPayments"
 
   spec.description  = <<-DESC

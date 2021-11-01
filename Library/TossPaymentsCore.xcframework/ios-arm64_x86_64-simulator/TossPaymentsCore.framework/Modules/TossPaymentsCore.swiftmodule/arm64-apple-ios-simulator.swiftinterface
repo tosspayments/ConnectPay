@@ -6,7 +6,6 @@ import CallKit
 import CommonCrypto
 import CoreTelephony
 import CryptoKit
-import FinCubeOcrSDK
 import Foundation
 import LocalAuthentication
 import MobileCoreServices
@@ -85,7 +84,11 @@ extension UIFont {
   final public var clientKey: Swift.String
   final public var customerKey: Swift.String
   final public var redirectURL: Swift.String
+  final public var config: TossPaymentsCore.ConnectPayConfigType!
   @objc deinit
+}
+public protocol ConnectPayConfigType {
+  func makeOCRCameraPreview() -> TossPaymentsCore.OcrCameraPreviewType
 }
 final public class ConnectPayProvider {
   public init()
@@ -479,6 +482,9 @@ public protocol TossAdapterLayoutProtocol {
 }
 extension UICollectionViewFlowLayout : TossPaymentsCore.TossAdapterLayoutProtocol {
 }
+@objc extension UIColor {
+  @objc public static let tossGrayBackground: UIKit.UIColor
+}
 extension Hasher {
   public mutating func randomize()
 }
@@ -621,6 +627,35 @@ extension UIImage : TossPaymentsCore.ImageContent {
   convenience public init(contentView: ContentView, topMargin: CoreGraphics.CGFloat = 0, leftMargin: CoreGraphics.CGFloat = 0, bottomMargin: CoreGraphics.CGFloat = 0, rightMargin: CoreGraphics.CGFloat = 0)
   @objc override dynamic public func layoutMarginsDidChange()
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+public protocol OcrCameraPreviewType : AnyObject {
+  var preview: AVFoundation.AVCaptureVideoPreviewLayer { get }
+  var videoFrameDelegate: TossPaymentsCore.OcrCameraPreviewDelegate? { get set }
+  func startSession()
+  func stopSession()
+  func setIDScannerMode(mode: Swift.Int)
+  func setOcrScannerType(_ type: Swift.Int)
+  func setGuideRect(horizontalOffset: Swift.Float, verticalOffset: Swift.Float, scale: Swift.Float, orientation: Swift.Int)
+  func changeGuideRect(horizontalOffset: Swift.Float, verticalOffset: Swift.Float, scale: Swift.Float, orientation: Swift.Int)
+  func setScanOption(scanexpiry: Swift.Bool, validateNumber: Swift.Bool, validateEpiry: Swift.Bool)
+  func setScanIDOption(scanIssuingDate: Swift.Bool, scanIssuingRegion: Swift.Bool, scanLicenseNumber: Swift.Bool, scanLicenseType: Swift.Bool, scanLicenseSerial: Swift.Bool)
+}
+public protocol OcrCameraPreviewDelegate : AnyObject {
+  func scanResult(_ result: TossPaymentsCore.OcrScanResult)
+}
+public class OcrScanResult {
+  public var cardNumber: Foundation.NSMutableString
+  public var expirtyDate: Foundation.NSMutableString
+  public var cardImage: UIKit.UIImage?
+  public var result: Swift.Int
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class OcrSdkDevice {
+  public static var shouldSetPixelFormat: Swift.Bool {
+    get
+  }
   @objc deinit
 }
 @_hasMissingDesignatedInitializers public class NavigationAppearanceInfo {

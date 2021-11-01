@@ -412,6 +412,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) NSBundle * _
 
 
 
+@interface UIColor (SWIFT_EXTENSION(TossPaymentsCore))
+/// .tossGray100 or #101013 (R: 10.0, G: 10.0, B: 13.0, A: 1.0)
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) UIColor * _Nonnull tossGrayBackground;)
++ (UIColor * _Nonnull)tossGrayBackground SWIFT_WARN_UNUSED_RESULT;
+@end
+
 
 
 
@@ -875,6 +881,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) NSBundle * _
 
 
 
+
+@interface UIColor (SWIFT_EXTENSION(TossPaymentsCore))
+/// .tossGray100 or #101013 (R: 10.0, G: 10.0, B: 13.0, A: 1.0)
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) UIColor * _Nonnull tossGrayBackground;)
++ (UIColor * _Nonnull)tossGrayBackground SWIFT_WARN_UNUSED_RESULT;
+@end
 
 
 
