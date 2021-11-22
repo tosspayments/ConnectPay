@@ -1,4 +1,0 @@
-framework module TossPaymentsCore {
-  header "TossPaymentsCore-Swift.h"
-  requires objc
-}
