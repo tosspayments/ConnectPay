@@ -3,4 +3,4 @@ echo $VERSION
 
 git tag $VERSION
 git push --tags
-pod trunk push ConnectPay.podspec
+bundle exec pod trunk push ConnectPay.podspec

@@ -1,0 +1,4 @@
+framework module ConnectPayCore {
+  header "ConnectPayCore-Swift.h"
+  requires objc
+}
