@@ -1,0 +1,11 @@
+framework module ConnectPayBase {
+  umbrella header "ConnectPayBase.h"
+
+  export *
+  module * { export * }
+}
+
+module ConnectPayBase.Swift {
+    header "ConnectPayBase-Swift.h"
+    requires objc
+}

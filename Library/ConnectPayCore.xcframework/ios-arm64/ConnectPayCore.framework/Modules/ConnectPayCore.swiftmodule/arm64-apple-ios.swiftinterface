@@ -1,13 +1,15 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConnectPayCore
 import AVFoundation
+import ConnectPayBase
 import FinCubeOcrSDK
 import Foundation
 import Swift
 import TossPaymentsCore
 import UIKit
 import WebKit
+import _Concurrency
 final public class ConnectPay {
   public static var sidePadding: CoreGraphics.CGFloat {
     get
@@ -101,7 +103,7 @@ public struct PaymentMethods : Swift.Codable {
   public func encode(to encoder: Swift.Encoder) throws
   public init(from decoder: Swift.Decoder) throws
 }
-public protocol ConnectPayAppBridgeController : TossPaymentsCore.WebViewControllerType {
+public protocol ConnectPayAppBridgeController : ConnectPayBase.WebViewControllerType {
 }
 public protocol ConnectPayDelegate : AnyObject {
   func getAccessToken(code: Swift.String?, resultHandler: ((Swift.Result<Swift.Bool, Swift.Error>) -> Swift.Void)?)

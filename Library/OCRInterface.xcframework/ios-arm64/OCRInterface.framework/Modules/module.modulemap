@@ -1,0 +1,11 @@
+framework module OCRInterface {
+  umbrella header "OCRInterface.h"
+
+  export *
+  module * { export * }
+}
+
+module OCRInterface.Swift {
+    header "OCRInterface-Swift.h"
+    requires objc
+}

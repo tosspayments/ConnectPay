@@ -1,0 +1,11 @@
+framework module BiometricInterface {
+  umbrella header "BiometricInterface.h"
+
+  export *
+  module * { export * }
+}
+
+module BiometricInterface.Swift {
+    header "BiometricInterface-Swift.h"
+    requires objc
+}

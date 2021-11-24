@@ -1,13 +1,13 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name TossPaymentsCore
 import AVFoundation
+import BiometricInterface
 import CallKit
-import CommonCrypto
+import ConnectPayBase
 import CoreTelephony
 import CryptoKit
 import Foundation
-import LocalAuthentication
 import MobileCoreServices
 import QuartzCore
 import Security
@@ -16,6 +16,7 @@ import SwiftUI
 import UIKit.UIFont
 import UIKit
 import WebKit
+import _Concurrency
 public enum TossPaymentsCoreAsset {
   public static let clearTextfield: TossPaymentsCore.TossPaymentsCoreImages
   public static let icnArrowDownwards: TossPaymentsCore.TossPaymentsCoreImages
@@ -41,7 +42,7 @@ public struct TossPaymentsCoreImages {
     get
   }
 }
-extension UIImage {
+extension UIKit.UIImage {
   @available(macOS, deprecated, message: "This initializer is unsafe on macOS, please use the TossPaymentsCoreImages.image property")
   convenience public init?(asset: TossPaymentsCore.TossPaymentsCoreImages)
 }
@@ -74,44 +75,8 @@ public struct TossPaymentsCoreFontConvertible {
   public func font(size: CoreGraphics.CGFloat) -> TossPaymentsCore.TossPaymentsCoreFontConvertible.Font
   public func register()
 }
-extension UIFont {
+extension UIKit.UIFont {
   convenience public init?(font: TossPaymentsCore.TossPaymentsCoreFontConvertible, size: CoreGraphics.CGFloat)
-}
-public protocol AppBridgeType {
-  typealias Controller = UIKit.UIViewController & TossPaymentsCore.WebViewControllerType
-  typealias SuccessHandler = ([Swift.String]) -> Swift.Void
-  typealias FailureHandler = (Swift.Error) -> Swift.Void
-  var name: Swift.String { get }
-  func handle(controller: Self.Controller, body: [Swift.String : Any], onSuccess: Self.SuccessHandler?, onError: Self.FailureHandler?)
-}
-extension WKWebView {
-  public func evaluateJavaScriptSafely(_ javaScriptString: Swift.String, completionHandler: ((Any?, Swift.Error?) -> Swift.Void)? = nil)
-}
-public protocol WebScriptMessageHandlerType : AnyObject {
-  typealias Controller = UIKit.UIViewController & TossPaymentsCore.WebViewControllerType
-  var registeredAppBridges: [Swift.String : TossPaymentsCore.AppBridgeType] { get set }
-  var controller: Self.Controller? { get set }
-  func register(appBridge: TossPaymentsCore.AppBridgeType)
-  func unregister(for name: Swift.String)
-}
-@objc @_inheritsConvenienceInitializers public class WebScriptMessageHandler : ObjectiveC.NSObject, TossPaymentsCore.WebScriptMessageHandlerType {
-  @objc override dynamic public init()
-  public var registeredAppBridges: [Swift.String : TossPaymentsCore.AppBridgeType]
-  weak public var controller: TossPaymentsCore.WebScriptMessageHandler.Controller?
-  public func register(appBridge: TossPaymentsCore.AppBridgeType)
-  public func unregister(for name: Swift.String)
-  @objc deinit
-}
-extension WebScriptMessageHandler : WebKit.WKScriptMessageHandler {
-  @objc dynamic public func userContentController(_ userContentController: WebKit.WKUserContentController, didReceive message: WebKit.WKScriptMessage)
-}
-public protocol WebViewControllerType : AnyObject {
-  var webView: WebKit.WKWebView { get }
-  var messageHandler: WebKit.WKScriptMessageHandler? { get set }
-  func installAppBridges()
-}
-extension WebViewControllerType where Self : UIKit.UIViewController {
-  public func installAppBridges()
 }
 @_hasMissingDesignatedInitializers final public class ConnectPayConfiguration {
   public static let shared: TossPaymentsCore.ConnectPayConfiguration
@@ -155,7 +120,6 @@ final public class AddCardPayableMethodProvider {
 }
 @objc public class CustomerTokenProvider : ObjectiveC.NSObject {
   public init(getAccessTokenHandler: TossPaymentsCore.GetAccessTokenHandler?)
-  @objc override dynamic public init()
   @objc deinit
 }
 @_hasMissingDesignatedInitializers final public class CustomerTokenRouter : TossPaymentsCore.ProcessRouter {
@@ -184,9 +148,9 @@ final public class IdentityProvider {
   override final public func continueProcess()
   @objc deinit
 }
-@objc @_inheritsConvenienceInitializers final public class VerifySMSView : UIKit.UIView {
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class VerifySMSView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc deinit
 }
 final public class OccupanciesAccountProvider {
@@ -232,6 +196,12 @@ final public class SettingsProvider {
   final public var resultHandler: ((Swift.Result<Swift.Void, Swift.Error>) -> Swift.Void)?
   public init(provider: TossPaymentsCore.SettingsProvider)
   override final public func continueProcess()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) open class TossViewController<View> : TossPaymentsCore.ContentViewController<View> where View : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func viewDidLoad()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
   @objc deinit
 }
 final public class TermsAgreementProvider {
@@ -302,87 +272,12 @@ public enum PayMethodListStep {
     set
   }
 }
-@objc extension NSData {
-  @objc dynamic public func toHexString() -> Swift.String
-  @objc dynamic public func toHexString(isLowerCased: Swift.Bool = true) -> Swift.String
-  @objc dynamic public func toString(encoding rawValue: Swift.UInt) -> Swift.String?
-  @objc dynamic public func toStringUsingUTF8Encoding() -> Swift.String?
-}
 @usableFromInline
 internal struct DiffResult<Index> {
 }
-public protocol EncryptedValue {
-  associatedtype SafeOutput
-  associatedtype UnsafeOutput
-  var decrypted: Self.SafeOutput { get }
-  var unsafeDecrypted: Self.UnsafeOutput { get }
-  func withSafeBuffer<T>(_ block: (Swift.UnsafeMutablePointer<Swift.Int8>, Swift.Int) throws -> T) rethrows -> T
-}
-extension EncryptedValue {
-  public func withSafeData<T>(_ block: (Foundation.Data) throws -> T) rethrows -> T
-}
-public enum ValidateWeakPINResult : Swift.Equatable {
-  case substringOfPhoneNumber
-  case substringOfBirthday
-  case sameNumberLongerThanThree
-  case consecutiveNumberLongerThanThree
-  case easyPIN
-  case validPIN
-  public var reasonMessage: Swift.String? {
-    get
-  }
-  public func hash(into hasher: inout Swift.Hasher)
-  public static func == (a: TossPaymentsCore.ValidateWeakPINResult, b: TossPaymentsCore.ValidateWeakPINResult) -> Swift.Bool
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-extension String {
-  public func validateWeakPIN(phoneNumber: Swift.String? = nil, eightDigitBirthday: Swift.String? = nil, weakPINs: [Swift.String] = []) -> TossPaymentsCore.ValidateWeakPINResult
-}
-@_hasMissingDesignatedInitializers public class TelNumberFormatter {
-  public enum MaskingArea : Swift.Equatable {
-    case areaCode
-    case firstNumber
-    case secondNumber
-    public func hash(into hasher: inout Swift.Hasher)
-    public static func == (a: TossPaymentsCore.TelNumberFormatter.MaskingArea, b: TossPaymentsCore.TelNumberFormatter.MaskingArea) -> Swift.Bool
-    public var hashValue: Swift.Int {
-      get
-    }
-  }
-  public static let shared: TossPaymentsCore.TelNumberFormatter
-  public func validate(_ telNumber: Swift.String) -> TossPaymentsCore.TelNumberInfo?
-  public func formatting(_ telNumber: Swift.String, masking: [TossPaymentsCore.TelNumberFormatter.MaskingArea] = []) -> Swift.String
-  @objc deinit
-}
-public struct TelNumberInfo {
-  public let parser: TossPaymentsCore.TelNumberParser
-  public let areaCode: Swift.String?
-  public let firstNumber: Swift.String
-  public let secondNumber: Swift.String
-}
-public enum TelNumberParser : Swift.CaseIterable {
-  case areaCode
-  case nationalRepresentative
-  case phone
-  public static func == (a: TossPaymentsCore.TelNumberParser, b: TossPaymentsCore.TelNumberParser) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public typealias AllCases = [TossPaymentsCore.TelNumberParser]
-  public static var allCases: [TossPaymentsCore.TelNumberParser] {
-    get
-  }
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-extension TelNumberParser {
-  public var validatingPattern: Swift.String {
-    get
-  }
-  public var formattingPattern: Swift.String {
-    get
-  }
+public enum ScreenState {
+  case schemaID(Swift.Int64)
+  case unknown
 }
 public struct InternalAccountMethod : Swift.Codable, Swift.Hashable, TossPaymentsCore.AccountMethodInterface {
   public let id: Swift.String
@@ -527,12 +422,12 @@ public protocol TossAdapterLayoutProtocol {
   var scrollDirection: UIKit.UICollectionView.ScrollDirection { get }
   var sectionInset: UIKit.UIEdgeInsets { get }
 }
-extension UICollectionViewFlowLayout : TossPaymentsCore.TossAdapterLayoutProtocol {
+extension UIKit.UICollectionViewFlowLayout : TossPaymentsCore.TossAdapterLayoutProtocol {
 }
-@objc extension UIColor {
+@objc extension UIKit.UIColor {
   @objc public static let tossGrayBackground: UIKit.UIColor
 }
-extension Hasher {
+extension Swift.Hasher {
   public mutating func randomize()
 }
 public protocol Diffable {
@@ -540,64 +435,70 @@ public protocol Diffable {
   func hash(into hasher: inout Swift.Hasher)
   func equals(_ diffable: TossPaymentsCore.Diffable) -> Swift.Bool
 }
-extension Diffable {
+extension TossPaymentsCore.Diffable {
   public var diffHash: Swift.Int {
     get
   }
   public func equals(_ diffable: TossPaymentsCore.Diffable) -> Swift.Bool
 }
-extension Diffable where Self : Swift.Hashable {
+extension TossPaymentsCore.Diffable where Self : Swift.Hashable {
   public var diffHash: Swift.Int {
     get
   }
 }
-extension Optional : TossPaymentsCore.Diffable where Wrapped : TossPaymentsCore.Diffable {
+extension Swift.Optional : TossPaymentsCore.Diffable where Wrapped : TossPaymentsCore.Diffable {
   public func hash(into hasher: inout Swift.Hasher)
 }
-@objc @_hasMissingDesignatedInitializers final public class DigitContainerView : UIKit.UIStackView {
-  final public var numberOfDigits: Swift.Int {
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) final public class DigitContainerView : UIKit.UIStackView {
+  @_Concurrency.MainActor(unsafe) final public var numberOfDigits: Swift.Int {
     get
     set
   }
-  final public var digits: [Swift.Int]? {
+  @_Concurrency.MainActor(unsafe) final public var digits: [Swift.Int]? {
     get
     set
   }
-  required public init(numberOfDigits: Swift.Int)
-  @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
-    @objc get
+  @_Concurrency.MainActor(unsafe) required public init(numberOfDigits: Swift.Int)
+  @_Concurrency.MainActor(unsafe) @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
+    @_Concurrency.MainActor(unsafe) @objc get
   }
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
 }
 public protocol CharacterPreviewAvailable {
   var value: Swift.String? { get }
 }
-@objc @_hasMissingDesignatedInitializers public class KeyView : UIKit.UIView, TossPaymentsCore.CharacterPreviewAvailable {
-  public var indexValue: Swift.Int? {
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class KeyView : UIKit.UIView, TossPaymentsCore.CharacterPreviewAvailable {
+  @_Concurrency.MainActor(unsafe) public var indexValue: Swift.Int? {
     get
     set
   }
-  public var value: Swift.String? {
+  @_Concurrency.MainActor(unsafe) public var value: Swift.String? {
     get
     set
   }
-  public var image: UIKit.UIImage? {
+  @_Concurrency.MainActor(unsafe) public var image: UIKit.UIImage? {
     get
     set
   }
-  @objc override dynamic public func layoutSubviews()
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
   @objc deinit
 }
-extension KeyView {
-  @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+extension TossPaymentsCore.KeyView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+}
+extension Swift.Array where Element == Foundation.NSAttributedString {
+  public func joined(separator: Foundation.NSAttributedString?) -> Foundation.NSAttributedString
+  public func joined(separator: Swift.String?) -> Foundation.NSAttributedString
+}
+extension Foundation.NSAttributedString {
+  public func height(withConstrainedWidth width: CoreGraphics.CGFloat) -> CoreGraphics.CGFloat
+  public func width(withConstrainedHeight height: CoreGraphics.CGFloat) -> CoreGraphics.CGFloat
 }
 public protocol SwitchConvertible : AnyObject {
   var isOn: Swift.Bool { get set }
   func setOn(_ on: Swift.Bool, animated: Swift.Bool)
 }
-extension SwitchConvertible {
+extension TossPaymentsCore.SwitchConvertible {
   public func toggle(animated: Swift.Bool)
 }
 public typealias SwitchControl = UIKit.UIControl & TossPaymentsCore.SwitchConvertible
@@ -607,20 +508,20 @@ public protocol TextDescriptor : TossPaymentsCore.Diffable {
   func descriptorHeight(using traitCollection: UIKit.UITraitCollection?) -> CoreGraphics.CGFloat
   var accessibilityLabel: Swift.String? { get }
 }
-extension TextDescriptor {
+extension TossPaymentsCore.TextDescriptor {
   public func attributedText() -> Foundation.NSAttributedString?
   public func descriptorHeight(using traitCollection: UIKit.UITraitCollection?) -> CoreGraphics.CGFloat
   public var accessibilityLabel: Swift.String? {
     get
   }
 }
-extension Optional : TossPaymentsCore.TextDescriptor where Wrapped : TossPaymentsCore.TextDescriptor {
+extension Swift.Optional : TossPaymentsCore.TextDescriptor where Wrapped : TossPaymentsCore.TextDescriptor {
   public func attributedText(using traitCollection: UIKit.UITraitCollection?) -> Foundation.NSAttributedString?
 }
 public protocol GroupedTextDescriptor : TossPaymentsCore.TextDescriptor {
   var textDescriptors: [TossPaymentsCore.TextDescriptor] { get }
 }
-extension GroupedTextDescriptor {
+extension TossPaymentsCore.GroupedTextDescriptor {
   public func hash(into hasher: inout Swift.Hasher)
   public func descriptorHeight(using traitCollection: UIKit.UITraitCollection?) -> CoreGraphics.CGFloat
   public func attributedText(using traitCollection: UIKit.UITraitCollection?) -> Foundation.NSAttributedString?
@@ -629,11 +530,11 @@ public struct DefaultGroupedTextDescriptor : TossPaymentsCore.GroupedTextDescrip
   public var textDescriptors: [TossPaymentsCore.TextDescriptor]
   public init(_ textDescriptors: [TossPaymentsCore.TextDescriptor])
 }
-extension UIImage {
+extension UIKit.UIImage {
   public class func image(fromColor color: UIKit.UIColor?, alpha: CoreGraphics.CGFloat = 1, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1)) -> UIKit.UIImage?
   public class func image(fromColors colors: [UIKit.UIColor], alpha: CoreGraphics.CGFloat = 1, size: CoreGraphics.CGSize = CGSize(width: 1, height: 1)) -> UIKit.UIImage?
 }
-extension UIImage {
+extension UIKit.UIImage {
   public func tint(with color: UIKit.UIColor) -> UIKit.UIImage
   public func tint(with colors: [UIKit.UIColor]) -> UIKit.UIImage
 }
@@ -663,17 +564,16 @@ extension UIImage {
 public protocol ImageContent {
   var image: UIKit.UIImage? { get }
 }
-extension UIImage : TossPaymentsCore.ImageContent {
+extension UIKit.UIImage : TossPaymentsCore.ImageContent {
   public var image: UIKit.UIImage? {
     get
   }
 }
-@_hasMissingDesignatedInitializers public class InsetContainerView<ContentView> : UIKit.UIView where ContentView : UIKit.UIView {
-  final public let contentView: ContentView
-  public init(contentView: ContentView, layoutMargins: UIKit.UIEdgeInsets = .zero)
-  convenience public init(contentView: ContentView, topMargin: CoreGraphics.CGFloat = 0, leftMargin: CoreGraphics.CGFloat = 0, bottomMargin: CoreGraphics.CGFloat = 0, rightMargin: CoreGraphics.CGFloat = 0)
-  @objc override dynamic public func layoutMarginsDidChange()
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class InsetContainerView<ContentView> : UIKit.UIView where ContentView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) final public let contentView: ContentView
+  @_Concurrency.MainActor(unsafe) public init(contentView: ContentView, layoutMargins: UIKit.UIEdgeInsets = .zero)
+  @_Concurrency.MainActor(unsafe) convenience public init(contentView: ContentView, topMargin: CoreGraphics.CGFloat = 0, leftMargin: CoreGraphics.CGFloat = 0, bottomMargin: CoreGraphics.CGFloat = 0, rightMargin: CoreGraphics.CGFloat = 0)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutMarginsDidChange()
   @objc deinit
 }
 public protocol OcrCameraPreviewDelegate : AnyObject {
@@ -725,7 +625,7 @@ public class OcrScanResult {
 public protocol ProcessRouterDelegate : AnyObject {
   func shouldDismissProcessRouterWhenFinished(_ processRouter: TossPaymentsCore.ProcessRouter) -> Swift.Bool
 }
-extension ProcessRouterDelegate {
+extension TossPaymentsCore.ProcessRouterDelegate {
   public func shouldDismissProcessRouterWhenFinished(_ processRouter: TossPaymentsCore.ProcessRouter) -> Swift.Bool
 }
 public protocol AlertPresentable : UIKit.UIViewController {
@@ -737,7 +637,7 @@ public class Alert {
   public init(title: Swift.String? = nil, message: Swift.String? = nil)
   @objc deinit
 }
-extension Alert {
+extension TossPaymentsCore.Alert {
   @discardableResult
   public func addAction(_ button: TossPaymentsCore.AlertActionButton, handler: TossPaymentsCore.AlertCompletion? = nil) -> Self
   public func setAutomaticDismissDisabled(_ isDisabled: Swift.Bool) -> Self
@@ -745,14 +645,14 @@ extension Alert {
   public func setDismissOnTappingDimmingView(_ dismissOnTappingDimmingView: Swift.Bool) -> Self
   public func setDismissOnTappingDimmingViewHandler(_ dismissOnTappingDimmingViewHandler: (() -> Swift.Void)?) -> Self
 }
-extension Alert {
+extension TossPaymentsCore.Alert {
   public func show(on viewController: UIKit.UIViewController? = nil)
   public func dismiss(animated: Swift.Bool = true)
 }
-extension Alert {
+extension TossPaymentsCore.Alert {
   public static func show(on viewController: UIKit.UIViewController? = nil, title: Swift.String? = nil, message: Swift.String? = nil, handler: TossPaymentsCore.AlertCompletion? = nil)
 }
-extension UIAlertController : TossPaymentsCore.AlertPresentable {
+extension UIKit.UIAlertController : TossPaymentsCore.AlertPresentable {
 }
 public struct AlertAction {
   public let button: TossPaymentsCore.AlertActionButton
@@ -768,45 +668,45 @@ public struct AlertActionButton {
   public static func cancel(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
   public static func destructive(_ title: Swift.String, style: TossPaymentsCore.Button.Style, theme: TossPaymentsCore.Button.Theme) -> TossPaymentsCore.AlertActionButton
 }
-extension AlertActionButton {
+extension TossPaymentsCore.AlertActionButton {
   public static func `default`(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
   public static func cancel(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
   public static func destructive(_ title: Swift.String) -> TossPaymentsCore.AlertActionButton
 }
-@_hasMissingDesignatedInitializers open class AlertController : TossPaymentsCore.TossViewController<UIKit.UIView>, UIKit.UIViewControllerTransitioningDelegate, UIKit.UIAdaptivePresentationControllerDelegate {
-  public var dismissOnTappingDimmingView: Swift.Bool
-  public var dismissOnTappingDimmingViewHandler: (() -> Swift.Void)?
-  public init()
-  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
-  open var presentedSize: CoreGraphics.CGSize {
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) open class AlertController : TossPaymentsCore.TossViewController<UIKit.UIView>, UIKit.UIViewControllerTransitioningDelegate, UIKit.UIAdaptivePresentationControllerDelegate {
+  @_Concurrency.MainActor(unsafe) public var dismissOnTappingDimmingView: Swift.Bool
+  @_Concurrency.MainActor(unsafe) public var dismissOnTappingDimmingViewHandler: (() -> Swift.Void)?
+  @_Concurrency.MainActor(unsafe) public init()
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) open var presentedSize: CoreGraphics.CGSize {
     get
   }
   @objc deinit
 }
-extension AlertController {
-  @objc dynamic public func presentationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController?, source: UIKit.UIViewController) -> UIKit.UIPresentationController?
-  @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
-  @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+extension TossPaymentsCore.AlertController {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func presentationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController?, source: UIKit.UIViewController) -> UIKit.UIPresentationController?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
 }
-@objc @_inheritsConvenienceInitializers open class BaseView : UIKit.UICollectionViewCell {
-  final public let container: UIKit.UIView
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
-    @objc get
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class BaseView : UIKit.UICollectionViewCell {
+  @_Concurrency.MainActor(unsafe) final public let container: UIKit.UIView
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @_Concurrency.MainActor(unsafe) @objc get
   }
-  @objc override dynamic open func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
-  public func setNeedsUpdateUI()
-  public func setup()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @_Concurrency.MainActor(unsafe) public func setNeedsUpdateUI()
+  @_Concurrency.MainActor(unsafe) public func setup()
   @objc deinit
 }
-extension BaseView {
-  public static var minimumHeight: CoreGraphics.CGFloat {
+extension TossPaymentsCore.BaseView {
+  @_Concurrency.MainActor(unsafe) public static var minimumHeight: CoreGraphics.CGFloat {
     get
   }
-  public func setViewModel(_ viewModel: Any)
+  @_Concurrency.MainActor(unsafe) public func setViewModel(_ viewModel: Any)
 }
-extension Button {
+extension TossPaymentsCore.Button {
   public enum Style : Swift.String {
     case fill
     case weak
@@ -817,7 +717,7 @@ extension Button {
     }
   }
 }
-extension Button {
+extension TossPaymentsCore.Button {
   public enum Theme : Swift.String {
     case primary
     case dark
@@ -830,42 +730,41 @@ extension Button {
     }
   }
 }
-@objc @_hasMissingDesignatedInitializers @IBDesignable public class Button : UIKit.UIButton {
-  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
-    @objc get
+@objc @_hasMissingDesignatedInitializers @IBDesignable @_Concurrency.MainActor(unsafe) public class Button : UIKit.UIButton {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @_Concurrency.MainActor(unsafe) @objc get
   }
-  @objc override dynamic public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
-  @objc override dynamic public var isEnabled: Swift.Bool {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var isEnabled: Swift.Bool {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
-  @objc override dynamic public func layoutSubviews()
-  @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
-  @objc override dynamic public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
-  @objc override dynamic public func setTitle(_ title: Swift.String?, for state: UIKit.UIControl.State)
-  @objc override dynamic public var frame: CoreGraphics.CGRect {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func setTitle(_ title: Swift.String?, for state: UIKit.UIControl.State)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var frame: CoreGraphics.CGRect {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
-  @objc override dynamic public var bounds: CoreGraphics.CGRect {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var bounds: CoreGraphics.CGRect {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
 }
-extension Checkbox {
+extension TossPaymentsCore.Checkbox {
   public struct Style {
   }
 }
-extension Checkbox.Style : Swift.Hashable {
+extension TossPaymentsCore.Checkbox.Style : Swift.Hashable {
   public static func == (lhs: TossPaymentsCore.Checkbox.Style, rhs: TossPaymentsCore.Checkbox.Style) -> Swift.Bool
   public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
 }
-extension Checkbox.Style {
+extension TossPaymentsCore.Checkbox.Style {
   public static var circleBig: TossPaymentsCore.Checkbox.Style {
     get
   }
@@ -879,7 +778,7 @@ extension Checkbox.Style {
     get
   }
 }
-extension Checkbox.Style {
+extension TossPaymentsCore.Checkbox.Style {
   public var primary: TossPaymentsCore.Checkbox.Style {
     get
   }
@@ -887,123 +786,123 @@ extension Checkbox.Style {
     get
   }
 }
-@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class Checkbox : UIKit.UIControl {
-  public var style: TossPaymentsCore.Checkbox.Style {
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class Checkbox : UIKit.UIControl {
+  @_Concurrency.MainActor(unsafe) public var style: TossPaymentsCore.Checkbox.Style {
     get
     set
   }
-  public var isOn: Swift.Bool
+  @_Concurrency.MainActor(unsafe) public var isOn: Swift.Bool
   @available(*, unavailable)
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  public init(frame: CoreGraphics.CGRect = .zero, style: TossPaymentsCore.Checkbox.Style)
-  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
-    @objc get
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) public init(frame: CoreGraphics.CGRect = .zero, style: TossPaymentsCore.Checkbox.Style)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @_Concurrency.MainActor(unsafe) @objc get
   }
-  @objc override dynamic public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
   @objc override dynamic public var accessibilityLabel: Swift.String? {
     @objc get
     @objc set
   }
-  @objc override dynamic public func layoutSubviews()
-  @objc override dynamic public func point(inside point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func point(inside point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> Swift.Bool
   @available(*, unavailable)
-  @objc override dynamic public var isSelected: Swift.Bool {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var isSelected: Swift.Bool {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override dynamic public var isHighlighted: Swift.Bool {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var isHighlighted: Swift.Bool {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override dynamic public var contentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var contentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override dynamic public var contentVerticalAlignment: UIKit.UIControl.ContentVerticalAlignment {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var contentVerticalAlignment: UIKit.UIControl.ContentVerticalAlignment {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override dynamic public var effectiveContentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
-    @objc get
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var effectiveContentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
+    @_Concurrency.MainActor(unsafe) @objc get
   }
   @objc deinit
 }
-extension Checkbox : TossPaymentsCore.SwitchConvertible {
-  public func setOn(_ on: Swift.Bool, animated: Swift.Bool)
+extension TossPaymentsCore.Checkbox : TossPaymentsCore.SwitchConvertible {
+  @_Concurrency.MainActor(unsafe) public func setOn(_ on: Swift.Bool, animated: Swift.Bool)
 }
-@objc @_inheritsConvenienceInitializers final public class MaterialActivityIndicator : UIKit.UIView {
-  @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
-    @objc get
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class MaterialActivityIndicator : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
+    @_Concurrency.MainActor(unsafe) @objc get
   }
-  @objc override final public var isHidden: Swift.Bool {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override final public var isHidden: Swift.Bool {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
-  final public var radius: CoreGraphics.CGFloat {
+  @_Concurrency.MainActor(unsafe) final public var radius: CoreGraphics.CGFloat {
     get
     set
   }
-  final public var strokeWidth: CoreGraphics.CGFloat {
+  @_Concurrency.MainActor(unsafe) final public var strokeWidth: CoreGraphics.CGFloat {
     get
     set
   }
-  final public var cycleColors: [UIKit.UIColor] {
+  @_Concurrency.MainActor(unsafe) final public var cycleColors: [UIKit.UIColor] {
     get
     set
   }
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc override final public func willMove(toWindow newWindow: UIKit.UIWindow?)
-  @objc override final public func layoutSubviews()
-  @objc override final public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
-  final public func startAnimating()
-  final public func stopAnimating(immediately: Swift.Bool = false)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override final public func willMove(toWindow newWindow: UIKit.UIWindow?)
+  @_Concurrency.MainActor(unsafe) @objc override final public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override final public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @_Concurrency.MainActor(unsafe) final public func startAnimating()
+  @_Concurrency.MainActor(unsafe) final public func stopAnimating(immediately: Swift.Bool = false)
   @objc deinit
 }
-@objc @_inheritsConvenienceInitializers final public class MenuSelector : UIKit.UIButton {
-  public static let defaultTitle: Swift.String
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
-  @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
-    @objc get
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class MenuSelector : UIKit.UIButton {
+  @_Concurrency.MainActor(unsafe) public static let defaultTitle: Swift.String
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override final public var intrinsicContentSize: CoreGraphics.CGSize {
+    @_Concurrency.MainActor(unsafe) @objc get
   }
-  @objc override final public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
+  @_Concurrency.MainActor(unsafe) @objc override final public func sizeThatFits(_ size: CoreGraphics.CGSize) -> CoreGraphics.CGSize
   @available(*, unavailable)
-  @objc override final public var contentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
-    @objc get
-    @objc set
-  }
-  @available(*, unavailable)
-  @objc override final public var contentVerticalAlignment: UIKit.UIControl.ContentVerticalAlignment {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override final public var contentHorizontalAlignment: UIKit.UIControl.ContentHorizontalAlignment {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override final public var contentEdgeInsets: UIKit.UIEdgeInsets {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override final public var contentVerticalAlignment: UIKit.UIControl.ContentVerticalAlignment {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override final public var imageEdgeInsets: UIKit.UIEdgeInsets {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override final public var contentEdgeInsets: UIKit.UIEdgeInsets {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override final public var titleEdgeInsets: UIKit.UIEdgeInsets {
-    @objc get
-    @objc set
+  @_Concurrency.MainActor(unsafe) @objc override final public var imageEdgeInsets: UIKit.UIEdgeInsets {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
   }
   @available(*, unavailable)
-  @objc override final public func setTitleColor(_ color: UIKit.UIColor?, for state: UIKit.UIControl.State)
+  @_Concurrency.MainActor(unsafe) @objc override final public var titleEdgeInsets: UIKit.UIEdgeInsets {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
+  }
   @available(*, unavailable)
-  @objc override final public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
+  @_Concurrency.MainActor(unsafe) @objc override final public func setTitleColor(_ color: UIKit.UIColor?, for state: UIKit.UIControl.State)
+  @available(*, unavailable)
+  @_Concurrency.MainActor(unsafe) @objc override final public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
   @objc deinit
 }
-extension CommonToast {
+extension TossPaymentsCore.CommonToast {
   public enum DismissTimeIntervalType {
     case forever
     case seconds(Swift.Double)
@@ -1028,56 +927,45 @@ extension CommonToast {
   }
   public typealias Completion = (TossPaymentsCore.CommonToast.DismissalType) -> Swift.Void
 }
-@objc open class CommonToast : UIKit.UIView {
+@objc @_Concurrency.MainActor(unsafe) open class CommonToast : UIKit.UIView {
   public struct CommonConstants {
   }
-  public init(frame: CoreGraphics.CGRect = .zero, completion: TossPaymentsCore.CommonToast.Completion? = nil)
+  @_Concurrency.MainActor(unsafe) public init(frame: CoreGraphics.CGRect = .zero, completion: TossPaymentsCore.CommonToast.Completion? = nil)
   @available(*, unavailable)
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
-  open func setUp()
-  open func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
-  open func dismissByPanGesture(direction: TossPaymentsCore.CommonToast.Direction)
-  open func dismissByTapGesture(direction: TossPaymentsCore.CommonToast.Direction)
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) open func setUp()
+  @_Concurrency.MainActor(unsafe) open func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
+  @_Concurrency.MainActor(unsafe) open func dismissByPanGesture(direction: TossPaymentsCore.CommonToast.Direction)
+  @_Concurrency.MainActor(unsafe) open func dismissByTapGesture(direction: TossPaymentsCore.CommonToast.Direction)
   @objc deinit
 }
-extension CommonToast {
-  public func show(animated: Swift.Bool = true)
-  public func show(in view: UIKit.UIView, animated: Swift.Bool = true)
-  public func dismiss(animate: Swift.Bool = true, dismissalType: TossPaymentsCore.CommonToast.DismissalType, direction: TossPaymentsCore.CommonToast.Direction = .down)
+extension TossPaymentsCore.CommonToast {
+  @_Concurrency.MainActor(unsafe) public func show(animated: Swift.Bool = true)
+  @_Concurrency.MainActor(unsafe) public func show(in view: UIKit.UIView, animated: Swift.Bool = true)
+  @_Concurrency.MainActor(unsafe) public func dismiss(animate: Swift.Bool = true, dismissalType: TossPaymentsCore.CommonToast.DismissalType, direction: TossPaymentsCore.CommonToast.Direction = .down)
 }
-extension Toast {
-  @objc(showWithContent:) public static func show(with content: Swift.String?)
-  @objc(showWithContent:timeInterval:) public static func show(with content: Swift.String?, timeInterval: Foundation.TimeInterval)
+extension TossPaymentsCore.Toast {
+  @objc(showWithContent:) @_Concurrency.MainActor(unsafe) public static func show(with content: Swift.String?)
+  @objc(showWithContent:timeInterval:) @_Concurrency.MainActor(unsafe) public static func show(with content: Swift.String?, timeInterval: Foundation.TimeInterval)
 }
-@objc @_hasMissingDesignatedInitializers public class Toast : TossPaymentsCore.CommonToast {
-  override public func setUp()
-  @objc override dynamic public func layoutSubviews()
-  override public func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
-  override public init(frame: CoreGraphics.CGRect = super, completion: TossPaymentsCore.CommonToast.Completion? = super)
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class Toast : TossPaymentsCore.CommonToast {
+  @_Concurrency.MainActor(unsafe) override public func setUp()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) override public func dismissTimeInternal() -> TossPaymentsCore.CommonToast.DismissTimeIntervalType
   @objc deinit
 }
-@objc @_hasMissingDesignatedInitializers final public class ToastWindow : UIKit.UIWindow {
-  public static let windowLevel: UIKit.UIWindow.Level
-  public static let `default`: TossPaymentsCore.ToastWindow
-  @objc override final public func hitTest(_ point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> UIKit.UIView?
-  @objc deinit
-  @available(iOS 13.0, *)
-  @objc override dynamic public init(windowScene: UIKit.UIWindowScene)
-}
-@_inheritsConvenienceInitializers open class ContentViewController<View> : UIKit.UIViewController where View : UIKit.UIView {
-  @objc override dynamic open func loadView()
-  @objc override dynamic open func viewDidLoad()
-  @objc override dynamic open func viewWillDisappear(_ animated: Swift.Bool)
-  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) final public class ToastWindow : UIKit.UIWindow {
+  @_Concurrency.MainActor(unsafe) public static let windowLevel: UIKit.UIWindow.Level
+  @_Concurrency.MainActor(unsafe) public static let `default`: TossPaymentsCore.ToastWindow
+  @_Concurrency.MainActor(unsafe) @objc override final public func hitTest(_ point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> UIKit.UIView?
   @objc deinit
 }
-@_hasMissingDesignatedInitializers open class TossViewController<View> : TossPaymentsCore.ContentViewController<View> where View : UIKit.UIView {
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc override dynamic open func viewDidLoad()
-  @objc override dynamic open func viewDidAppear(_ animated: Swift.Bool)
-  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+@_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class ContentViewController<View> : UIKit.UIViewController where View : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func loadView()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func viewDidLoad()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func viewWillDisappear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc deinit
 }
 public struct FlowSize {
@@ -1086,17 +974,17 @@ public struct FlowSize {
   public var distributionLength: CoreGraphics.CGFloat
   public init(scrollDirection: UIKit.UICollectionView.ScrollDirection, alignmentLength: CoreGraphics.CGFloat, distributionLength: CoreGraphics.CGFloat)
 }
-extension FlowSize {
+extension TossPaymentsCore.FlowSize {
   public func cgSize() -> CoreGraphics.CGSize
 }
-extension CGSize {
+extension CoreGraphics.CGSize {
   public func flowSize(by scrollDirection: UIKit.UICollectionView.ScrollDirection) -> TossPaymentsCore.FlowSize
 }
 public protocol SizeDiffable {
   var sizeDiffHash: Swift.Int { get }
   func hashSizeDiff(into hasher: inout Swift.Hasher)
 }
-extension SizeDiffable {
+extension TossPaymentsCore.SizeDiffable {
   public var sizeDiffHash: Swift.Int {
     get
   }
@@ -1142,6 +1030,7 @@ public enum PaymentMethodType : Swift.String, Swift.Codable {
   }
 }
 extension UIKit.UIImage : TossPaymentsCore.Diffable {}
+extension Swift.String : TossPaymentsCore.Diffable {}
 extension TossPaymentsCore.IdentityProvider.Purpose : Swift.Equatable {}
 extension TossPaymentsCore.IdentityProvider.Purpose : Swift.Hashable {}
 extension TossPaymentsCore.PaymentAuthType : Swift.Equatable {}
@@ -1150,11 +1039,6 @@ extension TossPaymentsCore.PaymentAuthType : Swift.RawRepresentable {}
 extension TossPaymentsCore.PayableMethodType : Swift.Equatable {}
 extension TossPaymentsCore.PayableMethodType : Swift.Hashable {}
 extension TossPaymentsCore.PayableMethodType : Swift.RawRepresentable {}
-extension Swift.String : TossPaymentsCore.Diffable {}
-extension TossPaymentsCore.ValidateWeakPINResult : Swift.Hashable {}
-extension TossPaymentsCore.TelNumberFormatter.MaskingArea : Swift.Hashable {}
-extension TossPaymentsCore.TelNumberParser : Swift.Equatable {}
-extension TossPaymentsCore.TelNumberParser : Swift.Hashable {}
 extension TossPaymentsCore.InternalCardMethod.CodingKeys : Swift.Equatable {}
 extension TossPaymentsCore.InternalCardMethod.CodingKeys : Swift.Hashable {}
 extension TossPaymentsCore.InternalCardMethod.CodingKeys : Swift.RawRepresentable {}
