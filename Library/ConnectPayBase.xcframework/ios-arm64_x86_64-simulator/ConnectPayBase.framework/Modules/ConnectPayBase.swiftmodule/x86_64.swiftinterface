@@ -99,12 +99,27 @@ extension ConnectPayBase.EncryptedString {
   public func safeRemoveFirst() -> ConnectPayBase.EncryptedString
   public func safeRemoveLast() -> ConnectPayBase.EncryptedString
 }
+extension Foundation.URL {
+  public func belongsTo(domain: Swift.String) -> Swift.Bool
+  public func belongsToAny(domains: [Swift.String]) -> Swift.Bool
+  public static func isHost(_ host: Swift.String, belongsToDomain domain: Swift.String) -> Swift.Bool
+}
 public protocol AppBridgeType {
   typealias Controller = UIKit.UIViewController & ConnectPayBase.WebViewControllerType
   typealias SuccessHandler = ([Swift.String]) -> Swift.Void
   typealias FailureHandler = (Swift.Error) -> Swift.Void
+  var allowedURLHostNameList: [Swift.String]? { get }
   var name: Swift.String { get }
+  func checkAllowDomainAndHandle(with controller: Self.Controller, message: WebKit.WKScriptMessage)
   func handle(controller: Self.Controller, body: [Swift.String : Any], onSuccess: Self.SuccessHandler?, onError: Self.FailureHandler?)
+}
+extension ConnectPayBase.AppBridgeType {
+  public var allowedURLHostNameList: [Swift.String]? {
+    get
+  }
+  public func checkAllowDomainAndHandle(with controller: Self.Controller, message: WebKit.WKScriptMessage)
+  public func isAllowedURL(with controller: UIKit.UIViewController & ConnectPayBase.WebViewControllerType, message: WebKit.WKScriptMessage) -> Swift.Bool
+  public func check(_ webViewController: UIKit.UIViewController & ConnectPayBase.WebViewControllerType, isInDomains domains: [Swift.String]?) -> Swift.Bool
 }
 public protocol WebViewControllerType : AnyObject {
   var webView: WebKit.WKWebView { get }
@@ -249,6 +264,9 @@ public protocol WebScriptMessageHandlerType : AnyObject {
 }
 extension ConnectPayBase.WebScriptMessageHandler : WebKit.WKScriptMessageHandler {
   @objc dynamic public func userContentController(_ userContentController: WebKit.WKUserContentController, didReceive message: WebKit.WKScriptMessage)
+}
+extension Swift.String {
+  public func matches(pattern regex: Swift.String) -> Swift.Bool
 }
 @_hasMissingDesignatedInitializers final public class Logger {
   public static func debug(_ text: Swift.String)

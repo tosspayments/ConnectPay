@@ -8,14 +8,21 @@ import LocalAuthentication
 import Swift
 import UIKit
 import _Concurrency
+final public class GetBiometricAuthMethodsAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  final public var allowedURLHostNameList: [Swift.String]?
+  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  final public func handle(controller: BiometricInterface.GetBiometricAuthMethodsAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.GetBiometricAuthMethodsAppBridge.SuccessHandler?, onError: BiometricInterface.GetBiometricAuthMethodsAppBridge.FailureHandler?)
+  @objc deinit
+}
 public typealias PolicyDomainState = Foundation.Data
-public enum BiometricType {
+public enum BiometricType : Swift.String {
   case touchID
   case faceID
   case none
-  public static func == (a: BiometricInterface.BiometricType, b: BiometricInterface.BiometricType) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
     get
   }
 }
@@ -26,6 +33,13 @@ final public class BiometricAuthenticationService {
     get
   }
   final public func prepareBioAuth() throws -> Swift.Bool
+  @objc deinit
+}
+final public class RegisterBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  final public var allowedURLHostNameList: [Swift.String]?
+  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  final public func handle(controller: BiometricInterface.RegisterBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.RegisterBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.RegisterBiometricAuthAppBridge.FailureHandler?)
   @objc deinit
 }
 public enum BioAuthError : Swift.Error, Foundation.LocalizedError {
@@ -43,6 +57,13 @@ public enum BioAuthError : Swift.Error, Foundation.LocalizedError {
     get
   }
 }
+final public class HasBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  final public var allowedURLHostNameList: [Swift.String]?
+  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  final public func handle(controller: BiometricInterface.HasBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.HasBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.HasBiometricAuthAppBridge.FailureHandler?)
+  @objc deinit
+}
 final public class BiometricAuthenticationProvider {
   public init()
   final public var biometricType: BiometricInterface.BiometricType {
@@ -56,13 +77,15 @@ final public class BiometricAuthenticationProvider {
   final public func delete(resultHandler: @escaping (Swift.Result<Swift.Bool, Swift.Error>) -> Swift.Void)
   @objc deinit
 }
-final public class BiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
+final public class VerifyBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  public init(service: BiometricInterface.BiometricAuthenticationService = BiometricAuthenticationService())
-  final public func handle(controller: BiometricInterface.BiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.BiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.BiometricAuthAppBridge.FailureHandler?)
+  final public var allowedURLHostNameList: [Swift.String]?
+  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  final public func handle(controller: BiometricInterface.VerifyBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.VerifyBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.VerifyBiometricAuthAppBridge.FailureHandler?)
   @objc deinit
 }
 extension BiometricInterface.BiometricType : Swift.Equatable {}
 extension BiometricInterface.BiometricType : Swift.Hashable {}
+extension BiometricInterface.BiometricType : Swift.RawRepresentable {}
 extension BiometricInterface.BioAuthError : Swift.Equatable {}
 extension BiometricInterface.BioAuthError : Swift.Hashable {}

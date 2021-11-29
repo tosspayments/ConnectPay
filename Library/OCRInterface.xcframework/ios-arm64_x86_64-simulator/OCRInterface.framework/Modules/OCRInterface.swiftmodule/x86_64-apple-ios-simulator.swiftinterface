@@ -1,14 +1,48 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name OCRInterface
+import AVFoundation
 import ConnectPayBase
+import FinCubeOcrSDK
 import Foundation
+import MobileCoreServices
 @_exported import OCRInterface
 import Swift
+import UIKit
 import _Concurrency
-final public class OCRScanAppBridge : ConnectPayBase.AppBridgeType {
-  public init()
+final public class ScanOCRCardAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  final public func handle(controller: OCRInterface.OCRScanAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.OCRScanAppBridge.SuccessHandler?, onError: OCRInterface.OCRScanAppBridge.FailureHandler?)
+  final public var allowedURLHostNameList: [Swift.String]?
+  public init(allowedURLHostNameList: [Swift.String]?)
+  final public func handle(controller: OCRInterface.ScanOCRCardAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.ScanOCRCardAppBridge.SuccessHandler?, onError: OCRInterface.ScanOCRCardAppBridge.FailureHandler?)
   @objc deinit
+}
+public protocol OcrCameraPreviewDelegate : AnyObject {
+  func scanResult(_ result: OCRInterface.OcrScanResult)
+}
+@_hasMissingDesignatedInitializers public class OcrSdkDevice {
+  public static var shouldSetPixelFormat: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+public class OcrScanResult {
+  public var cardNumber: Foundation.NSMutableString
+  public var expirtyDate: Foundation.NSMutableString
+  public var cardImage: UIKit.UIImage?
+  public var result: Swift.Int
+  public init()
+  @objc deinit
+}
+public protocol OcrCameraPreviewType : AnyObject {
+  var preview: AVFoundation.AVCaptureVideoPreviewLayer { get }
+  var videoFrameDelegate: OCRInterface.OcrCameraPreviewDelegate? { get set }
+  func startSession()
+  func stopSession()
+  func setIDScannerMode(mode: Swift.Int)
+  func setOcrScannerType(_ type: Swift.Int)
+  func setGuideRect(horizontalOffset: Swift.Float, verticalOffset: Swift.Float, scale: Swift.Float, orientation: Swift.Int)
+  func changeGuideRect(horizontalOffset: Swift.Float, verticalOffset: Swift.Float, scale: Swift.Float, orientation: Swift.Int)
+  func setScanOption(scanexpiry: Swift.Bool, validateNumber: Swift.Bool, validateEpiry: Swift.Bool)
+  func setScanIDOption(scanIssuingDate: Swift.Bool, scanIssuingRegion: Swift.Bool, scanLicenseNumber: Swift.Bool, scanLicenseType: Swift.Bool, scanLicenseSerial: Swift.Bool)
 }
