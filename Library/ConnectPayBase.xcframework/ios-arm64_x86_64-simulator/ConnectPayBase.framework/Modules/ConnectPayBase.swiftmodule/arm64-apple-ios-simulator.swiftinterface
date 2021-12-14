@@ -3,7 +3,9 @@
 // swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConnectPayBase
 import CommonCrypto
 @_exported import ConnectPayBase
+import CryptoKit
 import Foundation
+import Security
 import Swift
 import UIKit
 import WebKit
@@ -108,18 +110,14 @@ public protocol AppBridgeType {
   typealias Controller = UIKit.UIViewController & ConnectPayBase.WebViewControllerType
   typealias SuccessHandler = ([Swift.String]) -> Swift.Void
   typealias FailureHandler = (Swift.Error) -> Swift.Void
-  var allowedURLHostNameList: [Swift.String]? { get }
   var name: Swift.String { get }
   func checkAllowDomainAndHandle(with controller: Self.Controller, message: WebKit.WKScriptMessage)
   func handle(controller: Self.Controller, body: [Swift.String : Any], onSuccess: Self.SuccessHandler?, onError: Self.FailureHandler?)
 }
 extension ConnectPayBase.AppBridgeType {
-  public var allowedURLHostNameList: [Swift.String]? {
-    get
-  }
   public func checkAllowDomainAndHandle(with controller: Self.Controller, message: WebKit.WKScriptMessage)
   public func isAllowedURL(with controller: UIKit.UIViewController & ConnectPayBase.WebViewControllerType, message: WebKit.WKScriptMessage) -> Swift.Bool
-  public func check(_ webViewController: UIKit.UIViewController & ConnectPayBase.WebViewControllerType, isInDomains domains: [Swift.String]?) -> Swift.Bool
+  public func check(_ webViewController: UIKit.UIViewController & ConnectPayBase.WebViewControllerType) -> Swift.Bool
 }
 public protocol WebViewControllerType : AnyObject {
   var webView: WebKit.WKWebView { get }
@@ -411,6 +409,11 @@ extension ConnectPayBase.TelNumberParser {
   public var formattingPattern: Swift.String {
     get
   }
+}
+@_hasMissingDesignatedInitializers final public class RSAEncryptor {
+  public init(modulus: Swift.String, exponent: Swift.String)
+  final public func encrypt(plainText: Swift.String) -> Swift.String?
+  @objc deinit
 }
 extension ConnectPayBase.ValidateWeakPINResult : Swift.Hashable {}
 extension ConnectPayBase.AES.Mode : Swift.Equatable {}

@@ -12,8 +12,7 @@ import UIKit
 import _Concurrency
 final public class ScanOCRCardAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  final public var allowedURLHostNameList: [Swift.String]?
-  public init(allowedURLHostNameList: [Swift.String]?)
+  public init()
   final public func handle(controller: OCRInterface.ScanOCRCardAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.ScanOCRCardAppBridge.SuccessHandler?, onError: OCRInterface.ScanOCRCardAppBridge.FailureHandler?)
   @objc deinit
 }
@@ -32,6 +31,12 @@ public class OcrScanResult {
   public var cardImage: UIKit.UIImage?
   public var result: Swift.Int
   public init()
+  @objc deinit
+}
+final public class IsOCRAvailableAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  public init()
+  final public func handle(controller: OCRInterface.IsOCRAvailableAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.IsOCRAvailableAppBridge.SuccessHandler?, onError: OCRInterface.IsOCRAvailableAppBridge.FailureHandler?)
   @objc deinit
 }
 public protocol OcrCameraPreviewType : AnyObject {

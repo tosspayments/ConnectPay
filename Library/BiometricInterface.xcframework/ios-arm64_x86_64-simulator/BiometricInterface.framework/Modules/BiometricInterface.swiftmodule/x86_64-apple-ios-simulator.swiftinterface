@@ -10,8 +10,7 @@ import UIKit
 import _Concurrency
 final public class GetBiometricAuthMethodsAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  final public var allowedURLHostNameList: [Swift.String]?
-  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  public init(provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
   final public func handle(controller: BiometricInterface.GetBiometricAuthMethodsAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.GetBiometricAuthMethodsAppBridge.SuccessHandler?, onError: BiometricInterface.GetBiometricAuthMethodsAppBridge.FailureHandler?)
   @objc deinit
 }
@@ -37,8 +36,7 @@ final public class BiometricAuthenticationService {
 }
 final public class RegisterBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  final public var allowedURLHostNameList: [Swift.String]?
-  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  public init(provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
   final public func handle(controller: BiometricInterface.RegisterBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.RegisterBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.RegisterBiometricAuthAppBridge.FailureHandler?)
   @objc deinit
 }
@@ -59,8 +57,7 @@ public enum BioAuthError : Swift.Error, Foundation.LocalizedError {
 }
 final public class HasBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  final public var allowedURLHostNameList: [Swift.String]?
-  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  public init(provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
   final public func handle(controller: BiometricInterface.HasBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.HasBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.HasBiometricAuthAppBridge.FailureHandler?)
   @objc deinit
 }
@@ -79,8 +76,7 @@ final public class BiometricAuthenticationProvider {
 }
 final public class VerifyBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  final public var allowedURLHostNameList: [Swift.String]?
-  public init(allowedURLHostNameList: [Swift.String]?, provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  public init(provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
   final public func handle(controller: BiometricInterface.VerifyBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.VerifyBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.VerifyBiometricAuthAppBridge.FailureHandler?)
   @objc deinit
 }
