@@ -120,9 +120,9 @@ extension ConnectPayBase.AppBridgeType {
   public func check(_ webViewController: UIKit.UIViewController & ConnectPayBase.WebViewControllerType) -> Swift.Bool
 }
 public protocol WebViewControllerType : AnyObject {
-  var webView: WebKit.WKWebView { get }
   var messageHandler: WebKit.WKScriptMessageHandler? { get set }
   func installAppBridges()
+  func evaluateJavaScriptSafely(javaScriptString: Swift.String)
 }
 @objc extension Foundation.NSData {
   @objc dynamic public func toHexString() -> Swift.String
