@@ -25,6 +25,22 @@ public enum BiometricType : Swift.String {
     get
   }
 }
+public enum BiometricError : Swift.Error, Foundation.LocalizedError {
+  case canceled
+  case failed
+  case invalid
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public var failureReason: Swift.String? {
+    get
+  }
+  public static func == (a: BiometricInterface.BiometricError, b: BiometricInterface.BiometricError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
 final public class BiometricAuthenticationService {
   public init()
   final public func authenticate(resultHandler: @escaping (Swift.Result<BiometricInterface.PolicyDomainState, Swift.Error>) -> Swift.Void)
@@ -83,5 +99,7 @@ final public class VerifyBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
 extension BiometricInterface.BiometricType : Swift.Equatable {}
 extension BiometricInterface.BiometricType : Swift.Hashable {}
 extension BiometricInterface.BiometricType : Swift.RawRepresentable {}
+extension BiometricInterface.BiometricError : Swift.Equatable {}
+extension BiometricInterface.BiometricError : Swift.Hashable {}
 extension BiometricInterface.BioAuthError : Swift.Equatable {}
 extension BiometricInterface.BioAuthError : Swift.Hashable {}
