@@ -71,6 +71,12 @@ public enum BioAuthError : Swift.Error, Foundation.LocalizedError {
     get
   }
 }
+final public class UnregisterBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  public init(provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
+  final public func handle(controller: BiometricInterface.UnregisterBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.UnregisterBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.UnregisterBiometricAuthAppBridge.FailureHandler?)
+  @objc deinit
+}
 final public class HasBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
   public init(provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
