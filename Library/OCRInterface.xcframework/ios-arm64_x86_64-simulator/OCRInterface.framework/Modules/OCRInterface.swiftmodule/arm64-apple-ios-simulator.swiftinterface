@@ -17,6 +17,7 @@ final public class ScanOCRCardAppBridge : ConnectPayBase.AppBridgeType {
 }
 public protocol OcrCameraPreviewDelegate : AnyObject {
   func scanResult(_ result: OCRInterface.OcrScanResult)
+  func didExpiredDate()
 }
 @_hasMissingDesignatedInitializers public class OcrSdkDevice {
   public static var shouldSetPixelFormat: Swift.Bool {
