@@ -81,6 +81,9 @@
 @property(nonatomic, readwrite) CGRect mask_rect_id_number;
 @property(nonatomic, readwrite) CGRect mask_rect_license_number;
 
+@property(nonatomic, readwrite) CGRect rect_id_issue_date;
+@property(nonatomic, readwrite) CGRect rect_id_overseas_residents;
+
 //
 // passport result info
 //
