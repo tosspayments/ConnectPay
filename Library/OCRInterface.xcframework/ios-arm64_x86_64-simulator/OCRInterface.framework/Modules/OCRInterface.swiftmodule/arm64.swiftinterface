@@ -11,13 +11,14 @@ import Swift
 import UIKit
 final public class ScanOCRCardAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
-  public init()
+  public init(licenseKeyFile: Swift.String)
   final public func handle(controller: OCRInterface.ScanOCRCardAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.ScanOCRCardAppBridge.SuccessHandler?, onError: OCRInterface.ScanOCRCardAppBridge.FailureHandler?)
   @objc deinit
 }
 public protocol OcrCameraPreviewDelegate : AnyObject {
   func scanResult(_ result: OCRInterface.OcrScanResult)
   func didExpiredDate()
+  func didInvalidPackageName()
 }
 @_hasMissingDesignatedInitializers public class OcrSdkDevice {
   public static var shouldSetPixelFormat: Swift.Bool {

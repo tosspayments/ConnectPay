@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/OcrSdkConfig.h</key>
 		<data>
-		9+9NZjaOi3uVziJDi7gbhYRXrKA=
+		pLCTR6NtqdR7GqZGzndGHKmKQ7c=
 		</data>
 		<key>Headers/OcrSdkVideoFrame.h</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Yx21hpFjVRri+dJ+x/oMI9vK8Mc=
+		+90Flnnwp7fgnUQReh6OZxtxJFQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -181,11 +181,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			9+9NZjaOi3uVziJDi7gbhYRXrKA=
+			pLCTR6NtqdR7GqZGzndGHKmKQ7c=
 			</data>
 			<key>hash2</key>
 			<data>
-			4PxN6MX6eXpzCTw/y0EFvVFN5OimSB7iwopHQYtumEs=
+			sBf7fPAjx51h7p04wNQOjt6uspfg4NYA56dnsRS19DE=
 			</data>
 		</dict>
 		<key>Headers/OcrSdkVideoFrame.h</key>

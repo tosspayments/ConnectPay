@@ -170,6 +170,7 @@
 @property(nonatomic, readwrite) int idScannerMode;
 
 @property(nonatomic, readwrite, copy) NSString* licenseKeyFile;
+@property(nonatomic, readwrite, copy) NSString* licenseKeyBuffer;
 
 //
 // fitDirection 0 : width full scaled preview
