@@ -14,16 +14,6 @@ final public class GetBiometricAuthMethodsAppBridge : ConnectPayBase.AppBridgeTy
   @objc deinit
 }
 public typealias PolicyDomainState = Foundation.Data
-public enum BiometricType : Swift.String {
-  case touchID
-  case faceID
-  case none
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
-}
 public enum BiometricError : Swift.Error, Foundation.LocalizedError {
   case canceled
   case failed
@@ -84,7 +74,7 @@ final public class HasBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
 }
 final public class BiometricAuthenticationProvider {
   public init()
-  final public var biometricType: BiometricInterface.BiometricType {
+  final public var biometricType: ConnectPayBase.BiometricType {
     get
   }
   final public var isEnabled: Swift.Bool {
@@ -101,9 +91,6 @@ final public class VerifyBiometricAuthAppBridge : ConnectPayBase.AppBridgeType {
   final public func handle(controller: BiometricInterface.VerifyBiometricAuthAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.VerifyBiometricAuthAppBridge.SuccessHandler?, onError: BiometricInterface.VerifyBiometricAuthAppBridge.FailureHandler?)
   @objc deinit
 }
-extension BiometricInterface.BiometricType : Swift.Equatable {}
-extension BiometricInterface.BiometricType : Swift.Hashable {}
-extension BiometricInterface.BiometricType : Swift.RawRepresentable {}
 extension BiometricInterface.BiometricError : Swift.Equatable {}
 extension BiometricInterface.BiometricError : Swift.Hashable {}
 extension BiometricInterface.BioAuthError : Swift.Equatable {}

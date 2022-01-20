@@ -119,7 +119,6 @@ extension AppBridgeType {
   public func check(_ webViewController: UIKit.UIViewController & ConnectPayBase.WebViewControllerType) -> Swift.Bool
 }
 public protocol WebViewControllerType : AnyObject {
-  var messageHandler: WebKit.WKScriptMessageHandler? { get set }
   func installAppBridges()
   func evaluateJavaScriptSafely(javaScriptString: Swift.String)
 }
@@ -316,6 +315,16 @@ extension AES {
   final public func encrypt(data: Foundation.Data) throws -> Foundation.Data
   final public func decrypt(data: Foundation.Data) throws -> Foundation.Data
 }
+public enum BiometricType : Swift.String {
+  case touchID
+  case faceID
+  case none
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 public struct TelNumberInfo {
   public let parser: ConnectPayBase.TelNumberParser
   public let areaCode: Swift.String?
@@ -429,6 +438,9 @@ extension ConnectPayBase.AES.Mode : Swift.Equatable {}
 extension ConnectPayBase.AES.Mode : Swift.Hashable {}
 extension ConnectPayBase.AES.Size : Swift.Equatable {}
 extension ConnectPayBase.AES.Size : Swift.Hashable {}
+extension ConnectPayBase.BiometricType : Swift.Equatable {}
+extension ConnectPayBase.BiometricType : Swift.Hashable {}
+extension ConnectPayBase.BiometricType : Swift.RawRepresentable {}
 extension ConnectPayBase.TelNumberFormatter.MaskingArea : Swift.Hashable {}
 extension ConnectPayBase.TelNumberParser : Swift.Equatable {}
 extension ConnectPayBase.TelNumberParser : Swift.Hashable {}
