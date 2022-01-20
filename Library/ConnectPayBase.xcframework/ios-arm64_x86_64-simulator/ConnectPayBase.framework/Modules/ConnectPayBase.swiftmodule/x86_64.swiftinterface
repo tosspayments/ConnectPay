@@ -243,6 +243,12 @@ extension String {
     get
   }
 }
+final public class GetAppInfoAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  public init()
+  final public func handle(controller: ConnectPayBase.GetAppInfoAppBridge.Controller, body: [Swift.String : Any], onSuccess: ConnectPayBase.GetAppInfoAppBridge.SuccessHandler?, onError: ConnectPayBase.GetAppInfoAppBridge.FailureHandler?)
+  @objc deinit
+}
 extension EncryptedString {
   public func appending(_ string: ConnectPayBase.EncryptedString) -> ConnectPayBase.EncryptedString
   public func appending(_ string: Swift.String) -> ConnectPayBase.EncryptedString
