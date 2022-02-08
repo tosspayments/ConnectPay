@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)
+// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
 // swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConnectPayBase
 import CommonCrypto
 @_exported import ConnectPayBase
@@ -9,13 +9,12 @@ import Security
 import Swift
 import UIKit
 import WebKit
-import _Concurrency
-extension Swift.String {
+extension String {
   public func toUTF8Data() -> Foundation.Data
   public func toUTF16Data() -> Foundation.Data
   public func toDataFromHexString() -> Foundation.Data
 }
-@objc extension Foundation.NSString {
+@objc extension NSString {
   @objc dynamic public func toUTF8Data() -> Foundation.Data
   @objc dynamic public func toUTF16Data() -> Foundation.Data
   @objc dynamic public func toDataFromHexString() -> Foundation.Data
@@ -47,10 +46,10 @@ public enum ValidateWeakPINResult : Swift.Equatable {
     get
   }
 }
-extension Swift.String {
+extension String {
   public func validateWeakPIN(phoneNumber: Swift.String? = nil, eightDigitBirthday: Swift.String? = nil, weakPINs: [Swift.String] = []) -> ConnectPayBase.ValidateWeakPINResult
 }
-extension ConnectPayBase.EncryptedString {
+extension EncryptedString {
   public func safePrefix(_ maxLength: Swift.Int) -> ConnectPayBase.EncryptedString
   public func safeSuffix(_ maxLength: Swift.Int) -> ConnectPayBase.EncryptedString
   public func safeRemoveFirst() -> ConnectPayBase.EncryptedString
@@ -62,7 +61,7 @@ final public class GetAppInfoAppBridge : ConnectPayBase.AppBridgeType {
   final public func handle(controller: ConnectPayBase.GetAppInfoAppBridge.Controller, body: [Swift.String : Any], onSuccess: ConnectPayBase.GetAppInfoAppBridge.SuccessHandler?, onError: ConnectPayBase.GetAppInfoAppBridge.FailureHandler?)
   @objc deinit
 }
-extension Swift.String {
+extension String {
   public var signForNumber: Swift.String {
     get
   }
@@ -98,7 +97,7 @@ extension Swift.String {
     get
   }
 }
-extension Swift.String {
+extension String {
   public var isValidPhoneNumber: Swift.Bool {
     get
   }
@@ -124,7 +123,7 @@ extension Swift.String {
   public typealias UnsafeOutput = Foundation.Data
   @objc deinit
 }
-extension ConnectPayBase.EncryptedData : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+extension EncryptedData : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
   public var description: Swift.String {
     get
   }
@@ -132,14 +131,14 @@ extension ConnectPayBase.EncryptedData : Swift.CustomStringConvertible, Swift.Cu
     get
   }
 }
-extension ConnectPayBase.EncryptedData : Swift.Hashable {
+extension EncryptedData : Swift.Hashable {
   public func hash(into hasher: inout Swift.Hasher)
   public static func == (lhs: ConnectPayBase.EncryptedData, rhs: ConnectPayBase.EncryptedData) -> Swift.Bool
   public var hashValue: Swift.Int {
     get
   }
 }
-extension ConnectPayBase.EncryptedData : Swift.BidirectionalCollection {
+extension EncryptedData : Swift.BidirectionalCollection {
   public typealias Index = Swift.Int
   public typealias Element = Swift.UInt8
   public var startIndex: ConnectPayBase.EncryptedData.Index {
@@ -157,7 +156,7 @@ extension ConnectPayBase.EncryptedData : Swift.BidirectionalCollection {
   public typealias Iterator = Swift.IndexingIterator<ConnectPayBase.EncryptedData>
   public typealias SubSequence = Swift.Slice<ConnectPayBase.EncryptedData>
 }
-extension ConnectPayBase.EncryptedString {
+extension EncryptedString {
   public func appending(_ string: ConnectPayBase.EncryptedString) -> ConnectPayBase.EncryptedString
   public func appending(_ string: Swift.String) -> ConnectPayBase.EncryptedString
 }
@@ -182,6 +181,7 @@ extension ConnectPayBase.EncryptedString {
   }
   public func withSafeBuffer<T>(_ block: (Swift.UnsafeMutablePointer<Swift.Int8>, Swift.Int) throws -> T) rethrows -> T
   public func encode(to encoder: Swift.Encoder) throws
+  @objc override dynamic public init()
   public typealias ExtendedGraphemeClusterLiteralType = Swift.String
   public typealias SafeOutput = Foundation.NSMutableString
   public typealias StringLiteralType = Swift.String
@@ -189,13 +189,13 @@ extension ConnectPayBase.EncryptedString {
   public typealias UnsafeOutput = Swift.String
   @objc deinit
 }
-extension ConnectPayBase.EncryptedString {
+extension EncryptedString {
   @objc override dynamic public func isEqual(_ other: Any?) -> Swift.Bool
   @objc override dynamic public var hash: Swift.Int {
     @objc get
   }
 }
-extension ConnectPayBase.EncryptedString : Swift.BidirectionalCollection {
+extension EncryptedString : Swift.BidirectionalCollection {
   public typealias Index = Swift.Int
   public typealias Element = Swift.Character
   public var startIndex: ConnectPayBase.EncryptedString.Index {
@@ -213,10 +213,10 @@ extension ConnectPayBase.EncryptedString : Swift.BidirectionalCollection {
   public typealias Iterator = Swift.IndexingIterator<ConnectPayBase.EncryptedString>
   public typealias SubSequence = Swift.Slice<ConnectPayBase.EncryptedString>
 }
-extension Swift.String {
+extension String {
   public func toEncryptedString() -> ConnectPayBase.EncryptedString
 }
-extension Foundation.NSMutableString {
+extension NSMutableString {
   public func toEncryptedString() -> ConnectPayBase.EncryptedString
 }
 public protocol AppBridgeType {
@@ -228,7 +228,7 @@ public protocol AppBridgeType {
   func checkAllowDomainAndHandle(with controller: Self.Controller, message: WebKit.WKScriptMessage)
   func handle(controller: Self.Controller, body: [Swift.String : Any], onSuccess: Self.SuccessHandler?, onError: Self.FailureHandler?)
 }
-extension ConnectPayBase.AppBridgeType {
+extension AppBridgeType {
   public var skipQuotes: Swift.Bool {
     get
   }
@@ -236,7 +236,7 @@ extension ConnectPayBase.AppBridgeType {
   public func isAllowedURL(with controller: UIKit.UIViewController & ConnectPayBase.WebViewControllerType, message: WebKit.WKScriptMessage) -> Swift.Bool
   public func check(_ webViewController: UIKit.UIViewController & ConnectPayBase.WebViewControllerType) -> Swift.Bool
 }
-extension ConnectPayBase.AES {
+extension AES {
   final public func safeEncrypt(_ data: Foundation.Data) throws -> ConnectPayBase.EncryptedData
   final public func safeEncrypt(_ string: Swift.String) throws -> ConnectPayBase.EncryptedData
   final public func safeEncrypt<T>(_ value: T) throws -> ConnectPayBase.EncryptedData where T : ConnectPayBase.EncryptedValue
@@ -264,7 +264,7 @@ public enum BiometricType : Swift.String {
     get
   }
 }
-extension Swift.String {
+extension String {
   public var trimmed: Swift.String {
     get
   }
@@ -272,10 +272,10 @@ extension Swift.String {
     get
   }
 }
-extension WebKit.WKWebView {
-  @_Concurrency.MainActor(unsafe) public func evaluateJavaScriptSafely(_ javaScriptString: Swift.String, completionHandler: ((Any?, Swift.Error?) -> Swift.Void)? = nil)
+extension WKWebView {
+  public func evaluateJavaScriptSafely(_ javaScriptString: Swift.String, completionHandler: ((Any?, Swift.Error?) -> Swift.Void)? = nil)
 }
-extension Swift.String {
+extension String {
   public var urlEncoded: Swift.String {
     get
   }
@@ -283,20 +283,20 @@ extension Swift.String {
     get
   }
 }
-extension Foundation.Data {
+extension Data {
   public var prettyPrintedJSONString: Swift.String? {
     get
   }
 }
-extension Swift.String {
+extension String {
   public func boundingRect(with width: CoreGraphics.CGFloat = UIView.layoutFittingExpandedSize.width, attributes: [Foundation.NSAttributedString.Key : Any]? = nil, applyingLineHeight: Swift.Bool = true) -> CoreGraphics.CGRect
 }
-extension Swift.String {
+extension String {
   public func width(withConstrainedHeight height: CoreGraphics.CGFloat, font: UIKit.UIFont) -> CoreGraphics.CGFloat
   public func height(withConstrainedWidth width: CoreGraphics.CGFloat, font: UIKit.UIFont) -> CoreGraphics.CGFloat
   public func heightNoCeil(width: CoreGraphics.CGFloat, font: UIKit.UIFont) -> CoreGraphics.CGFloat
 }
-extension Swift.String {
+extension String {
   public subscript(bounds: Swift.CountableClosedRange<Swift.Int>) -> Swift.String {
     get
   }
@@ -307,7 +307,7 @@ extension Swift.String {
     get
   }
 }
-extension Swift.String {
+extension String {
   public func index(_ idx: Swift.Int) -> Swift.String.Index
   public subscript(idx: Swift.Int) -> Swift.Character? {
     get
@@ -319,7 +319,7 @@ public struct TelNumberInfo {
   public let firstNumber: Swift.String
   public let secondNumber: Swift.String
 }
-extension Swift.String {
+extension String {
   public func matches(pattern regex: Swift.String) -> Swift.Bool
 }
 public protocol WebScriptMessageHandlerType : AnyObject {
@@ -337,14 +337,14 @@ public protocol WebScriptMessageHandlerType : AnyObject {
   public func unregister(for name: Swift.String)
   @objc deinit
 }
-extension ConnectPayBase.WebScriptMessageHandler : WebKit.WKScriptMessageHandler {
+extension WebScriptMessageHandler : WebKit.WKScriptMessageHandler {
   @objc dynamic public func userContentController(_ userContentController: WebKit.WKUserContentController, didReceive message: WebKit.WKScriptMessage)
 }
 final public class AES {
   public init(mode: ConnectPayBase.AES.Mode = .cbc, size: ConnectPayBase.AES.Size = .aes256, key: Foundation.Data, initialVector: Foundation.Data) throws
   @objc deinit
 }
-extension ConnectPayBase.AES {
+extension AES {
   public enum Mode {
     case cbc
     public static func == (a: ConnectPayBase.AES.Mode, b: ConnectPayBase.AES.Mode) -> Swift.Bool
@@ -367,12 +367,12 @@ extension ConnectPayBase.AES {
     public static let defaultInitialVectorString: Swift.String
   }
 }
-extension ConnectPayBase.AES {
+extension AES {
   final public func encrypt(data: Foundation.Data) throws -> Foundation.Data
   final public func decrypt(data: Foundation.Data) throws -> Foundation.Data
 }
-extension UIKit.UIControl {
-  @_Concurrency.MainActor(unsafe) public func addAction(for controlEvents: UIKit.UIControl.Event = .touchUpInside, _ closure: @escaping () -> Swift.Void)
+extension UIControl {
+  public func addAction(for controlEvents: UIKit.UIControl.Event = .touchUpInside, _ closure: @escaping () -> Swift.Void)
 }
 public enum TelNumberParser : Swift.CaseIterable {
   case areaCode
@@ -388,7 +388,7 @@ public enum TelNumberParser : Swift.CaseIterable {
     get
   }
 }
-extension ConnectPayBase.TelNumberParser {
+extension TelNumberParser {
   public var validatingPattern: Swift.String {
     get
   }
@@ -403,10 +403,10 @@ public protocol EncryptedValue {
   var unsafeDecrypted: Self.UnsafeOutput { get }
   func withSafeBuffer<T>(_ block: (Swift.UnsafeMutablePointer<Swift.Int8>, Swift.Int) throws -> T) rethrows -> T
 }
-extension ConnectPayBase.EncryptedValue {
+extension EncryptedValue {
   public func withSafeData<T>(_ block: (Foundation.Data) throws -> T) rethrows -> T
 }
-extension Foundation.URL {
+extension URL {
   public func belongsTo(domain: Swift.String) -> Swift.Bool
   public func belongsToAny(domains: [Swift.String]) -> Swift.Bool
   public static func isHost(_ host: Swift.String, belongsToDomain domain: Swift.String) -> Swift.Bool
@@ -427,7 +427,7 @@ extension Foundation.URL {
   public func formatting(_ telNumber: Swift.String, masking: [ConnectPayBase.TelNumberFormatter.MaskingArea] = []) -> Swift.String
   @objc deinit
 }
-@objc extension Foundation.NSData {
+@objc extension NSData {
   @objc dynamic public func toHexString() -> Swift.String
   @objc dynamic public func toHexString(isLowerCased: Swift.Bool = true) -> Swift.String
   @objc dynamic public func toString(encoding rawValue: Swift.UInt) -> Swift.String?
@@ -437,7 +437,7 @@ public protocol WebViewControllerType : AnyObject {
   func installAppBridges()
   func evaluateJavaScriptSafely(javaScriptString: Swift.String)
 }
-extension Swift.Array where Element : Swift.Encodable {
+extension Array where Element : Swift.Encodable {
   public var jsonData: Foundation.Data {
     get
   }
