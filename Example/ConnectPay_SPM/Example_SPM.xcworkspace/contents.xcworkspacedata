@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ConnectPayExample/ConnectPayExample.xcodeproj">
+      location = "group:Example_SPM/Example_SPM.xcodeproj">
    </FileRef>
 </Workspace>
