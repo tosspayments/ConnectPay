@@ -1,0 +1,24 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '11.0'
+
+target 'ConnectPayBiometricExample' do
+  use_frameworks!
+  pod 'ConnectPay/Biometric', :path => '../../'
+end
+
+target 'ConnectPayOCRExample' do
+  use_frameworks!
+  pod 'ConnectPay/OCR', :path => '../../'
+end
+
+target 'ConnectPayExample' do
+  use_frameworks!
+  pod 'ConnectPay/Biometric', :path => '../../'
+  pod 'ConnectPay/OCR', :path => '../../'
+end
+
+target 'ConnectPayUIExample' do
+  use_frameworks!
+
+  pod 'ConnectPay/UI', :path => '../../'
+end

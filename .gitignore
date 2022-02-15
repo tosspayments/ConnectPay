@@ -1,7 +1,7 @@
-/Library/.DS_Store
-/Library/ConnectPayCore.xcframework/.DS_Store
-/Library/ConnectPayCore.xcframework/ios-arm64_x86_64-simulator/.DS_Store
-/Library/ConnectPayCore.xcframework/ios-arm64/.DS_Store
-/Library/ConnectPayCore.xcframework/ios-arm64_x86_64-simulator/dSYMs/.DS_Store
-/Library/ConnectPayCore.xcframework/ios-arm64/dSYMs/.DS_Store
 .DS_Store
+/Example/ConnectPay_Cocoapod/Pods/**
+/*.xcodeproj
+**/xcuserdata
+**/xcshareddata
+**/xcworkspacedata
+/.DS_Store

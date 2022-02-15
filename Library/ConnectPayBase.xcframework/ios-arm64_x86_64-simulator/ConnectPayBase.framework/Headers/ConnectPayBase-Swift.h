@@ -227,6 +227,7 @@ SWIFT_CLASS("_TtC14ConnectPayBase15EncryptedString")
 
 
 
+
 @class NSNumber;
 
 @interface EncryptedString (SWIFT_EXTENSION(ConnectPayBase))
@@ -249,7 +250,6 @@ SWIFT_CLASS("_TtC14ConnectPayBase15EncryptedString")
 - (NSString * _Nullable)toStringWithEncoding:(NSUInteger)rawValue SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)toStringUsingUTF8Encoding SWIFT_WARN_UNUSED_RESULT;
 @end
-
 
 
 
@@ -512,6 +512,7 @@ SWIFT_CLASS("_TtC14ConnectPayBase15EncryptedString")
 
 
 
+
 @class NSNumber;
 
 @interface EncryptedString (SWIFT_EXTENSION(ConnectPayBase))
@@ -534,7 +535,6 @@ SWIFT_CLASS("_TtC14ConnectPayBase15EncryptedString")
 - (NSString * _Nullable)toStringWithEncoding:(NSUInteger)rawValue SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)toStringUsingUTF8Encoding SWIFT_WARN_UNUSED_RESULT;
 @end
-
 
 
 

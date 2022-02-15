@@ -6,9 +6,48 @@ import ConnectPayBase
 import FinCubeOcrSDK
 import Foundation
 import MobileCoreServices
-@_exported import OCRInterface
 import Swift
 import UIKit
+public enum OCRInterfaceAsset {
+  public static let icnIosClose: OCRInterface.OCRInterfaceImages
+}
+public struct OCRInterfaceImages {
+  public var name: Swift.String {
+    get
+  }
+  public typealias Image = UIKit.UIImage
+  public var image: OCRInterface.OCRInterfaceImages.Image {
+    get
+  }
+}
+extension UIImage {
+  @available(macOS, deprecated, message: "This initializer is unsafe on macOS, please use the OCRInterfaceImages.image property")
+  convenience public init?(asset: OCRInterface.OCRInterfaceImages)
+}
+@_inheritsConvenienceInitializers @objc public class OCRInterfaceResources : ObjectiveC.NSObject {
+  @objc public class var bundle: Foundation.Bundle {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+final public class IsOCRAvailableAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  public init()
+  final public func handle(controller: OCRInterface.IsOCRAvailableAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.IsOCRAvailableAppBridge.SuccessHandler?, onError: OCRInterface.IsOCRAvailableAppBridge.FailureHandler?)
+  @objc deinit
+}
+final public class ScanOCRCardAppBridge : ConnectPayBase.AppBridgeType {
+  final public var name: Swift.String
+  public init(licenseKeyFile: Swift.String)
+  final public func handle(controller: OCRInterface.ScanOCRCardAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.ScanOCRCardAppBridge.SuccessHandler?, onError: OCRInterface.ScanOCRCardAppBridge.FailureHandler?)
+  @objc deinit
+}
+public protocol OcrCameraPreviewDelegate : AnyObject {
+  func scanResult(_ result: OCRInterface.OcrScanResult)
+  func didExpiredDate()
+  func didInvalidPackageName()
+}
 public protocol OcrCameraPreviewType : AnyObject {
   var preview: AVFoundation.AVCaptureVideoPreviewLayer { get }
   var videoFrameDelegate: OCRInterface.OcrCameraPreviewDelegate? { get set }
@@ -21,18 +60,6 @@ public protocol OcrCameraPreviewType : AnyObject {
   func setScanOption(scanexpiry: Swift.Bool, validateNumber: Swift.Bool, validateEpiry: Swift.Bool)
   func setScanIDOption(scanIssuingDate: Swift.Bool, scanIssuingRegion: Swift.Bool, scanLicenseNumber: Swift.Bool, scanLicenseType: Swift.Bool, scanLicenseSerial: Swift.Bool)
 }
-final public class ScanOCRCardAppBridge : ConnectPayBase.AppBridgeType {
-  final public var name: Swift.String
-  public init(licenseKeyFile: Swift.String)
-  final public func handle(controller: OCRInterface.ScanOCRCardAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.ScanOCRCardAppBridge.SuccessHandler?, onError: OCRInterface.ScanOCRCardAppBridge.FailureHandler?)
-  @objc deinit
-}
-final public class IsOCRAvailableAppBridge : ConnectPayBase.AppBridgeType {
-  final public var name: Swift.String
-  public init()
-  final public func handle(controller: OCRInterface.IsOCRAvailableAppBridge.Controller, body: [Swift.String : Any], onSuccess: OCRInterface.IsOCRAvailableAppBridge.SuccessHandler?, onError: OCRInterface.IsOCRAvailableAppBridge.FailureHandler?)
-  @objc deinit
-}
 public class OcrScanResult {
   public var cardNumber: Foundation.NSMutableString
   public var expirtyDate: Foundation.NSMutableString
@@ -40,11 +67,6 @@ public class OcrScanResult {
   public var result: Swift.Int
   public init()
   @objc deinit
-}
-public protocol OcrCameraPreviewDelegate : AnyObject {
-  func scanResult(_ result: OCRInterface.OcrScanResult)
-  func didExpiredDate()
-  func didInvalidPackageName()
 }
 @_hasMissingDesignatedInitializers public class OcrSdkDevice {
   public static var shouldSetPixelFormat: Swift.Bool {
