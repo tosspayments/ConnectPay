@@ -63,3 +63,43 @@ pod install
 ### Swift Package Manager
 
 https://github.com/tosspayments/ConnectPay
+
+## 권한 설정
+ConnectPay iOS SDK느 카메라 권한과 생체인증 권한 설정ㅇ 필요합니다.
+
+## Web ↔ App간 Message 처리를 위한 설정
+```
+extension ConnectPayWebInterface: WebViewControllerType {
+
+    // var webView: WKWebView! // 선언되어있는 WKWebView instance를 사용합닏.
+    
+    // 
+    func installAppBridges() {
+        let biometricMessageHandler = WebScriptMessageHandler()
+        biometricMessageHandler.controller = self
+        
+        biometricMessageHandler.register(appBridge: GetAppInfoAppBridge())
+        biometricMessageHandler.register(appBridge: HasBiometricAuthAppBridge())
+        biometricMessageHandler.register(appBridge: GetBiometricAuthMethodsAppBridge())
+        biometricMessageHandler.register(appBridge: VerifyBiometricAuthAppBridge())
+        biometricMessageHandler.register(appBridge: RegisterBiometricAuthAppBridge())
+        biometricMessageHandler.register(appBridge: UnregisterBiometricAuthAppBridge())
+        webView.configuration.userContentController.add(biometricMessageHandler, name: "ConnectPayAuth")
+        
+        // * OCR 기능은 앱 패키지 별로 flk license file 로 관리됩니다. 
+        let ocrMessageHandler = WebScriptMessageHandler()
+        ocrMessageHandler.controller = self
+        
+        ocrMessageHandler.register(appBridge: ScanOCRCardAppBridge(licenseKeyFile: "tosspayment_20220106.flk"))
+        ocrMessageHandler.register(appBridge: IsOCRAvailableAppBridge())
+        webView.configuration.userContentController.add(ocrMessageHandler, name: "ConnectPayOcr")        
+    }
+    
+    // Javascript 호출을 해야 Message 처리가 가능합니다.
+    func evaluateJavaScriptSafely(javaScriptString: String) {
+        webView.evaluateJavaScript(javaScriptString) { (_, _) in
+            
+        }
+    }
+}
+```
