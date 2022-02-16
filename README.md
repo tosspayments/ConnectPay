@@ -1,8 +1,11 @@
 Connectpay
 https://tosspayments.com
 
-[![Version](https://img.shields.io/cocoapods/v/ConnectPay.svg?style=flat)](https://cocoapods.org/pods//ConnectPay)
+<img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" alt="Supported Platforms: iOS"/>
+
+[![Version](https://img.shields.io/cocoapods/v/ConnectPay.svg?style=flat)](https://cocoapods.org/pods/ConnectPay)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/tosspayments/ios-connectpay)
+<a href="https://github.com/apple/swift-package-manager" alt="RxSwift on Swift Package Manager" title="RxSwift on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
 
 # 커넥트페이 iOS SDK 
 커넥트페이 iOS SDK를 추가하고 메서드를 사용하는 방법을 알아봅니다.
