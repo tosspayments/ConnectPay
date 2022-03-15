@@ -6,12 +6,6 @@ import Foundation
 import LocalAuthentication
 import Swift
 import UIKit
-final public class VerifyBiometricAuthCardAppBridge : ConnectPayBase.AppBridgeType {
-  final public var name: Swift.String
-  public init(provider: BiometricInterface.BiometricAuthenticationProvider = BiometricAuthenticationProvider())
-  final public func handle(controller: BiometricInterface.VerifyBiometricAuthCardAppBridge.Controller, body: [Swift.String : Any], onSuccess: BiometricInterface.VerifyBiometricAuthCardAppBridge.SuccessHandler?, onError: BiometricInterface.VerifyBiometricAuthCardAppBridge.FailureHandler?)
-  @objc deinit
-}
 final public class GetBiometricAuthMethodsAppBridge : ConnectPayBase.AppBridgeType {
   final public var name: Swift.String
   final public let skipQuotes: Swift.Bool
