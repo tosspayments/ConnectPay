@@ -1,10 +1,10 @@
 PODS:
-  - ConnectPay/Biometric (0.1.34):
+  - ConnectPay/Biometric (0.2.0):
     - ConnectPay/Core
-  - ConnectPay/Core (0.1.34)
-  - ConnectPay/OCR (0.1.34):
+  - ConnectPay/Core (0.2.0)
+  - ConnectPay/OCR (0.2.0):
     - ConnectPay/Core
-  - ConnectPay/UI (0.1.34):
+  - ConnectPay/UI (0.2.0):
     - ConnectPay/Biometric
     - ConnectPay/Core
     - ConnectPay/OCR
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  ConnectPay: 5aae3815eb8fc96d6cea93baa19e103afa843aff
+  ConnectPay: fe8f4ba742a74a7b31a9e8d40457957ee3cfc087
 
 PODFILE CHECKSUM: fe336c6bc5057c24e76524bb1da31fff97bcf5af
 
