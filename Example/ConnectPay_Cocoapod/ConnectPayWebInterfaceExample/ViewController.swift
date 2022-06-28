@@ -92,7 +92,7 @@ extension ConnectPayWebInterfaceDemoViewController: WebViewControllerType {
         webView.configuration.userContentController.add(messageHandler, name: "ConnectPayAuth")
         
 //         * OCR 기능은 앱 패키지 별로 flk license file 로 관리됩니다.
-        messageHandler.register(appBridge: ScanOCRCardAppBridge(licenseKeyFile: "tosspayment_20220106.flk"))
+        messageHandler.register(appBridge: ScanOCRCardAppBridge(licenseKeyFile: "tosspayment_20220513.flk"))
         messageHandler.register(appBridge: IsOCRAvailableAppBridge())
         webView.configuration.userContentController.add(messageHandler, name: "ConnectPayOcr")
         

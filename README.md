@@ -90,7 +90,7 @@ extension ConnectPayWebInterface: WebViewControllerType {
         let ocrMessageHandler = WebScriptMessageHandler()
         ocrMessageHandler.controller = self
         
-        ocrMessageHandler.register(appBridge: ScanOCRCardAppBridge(licenseKeyFile: "tosspayment_20220106.flk"))
+        ocrMessageHandler.register(appBridge: ScanOCRCardAppBridge(licenseKeyFile: "tosspayment_20220513.flk"))
         ocrMessageHandler.register(appBridge: IsOCRAvailableAppBridge())
         webView.configuration.userContentController.add(ocrMessageHandler, name: "ConnectPayOcr")        
     }
